@@ -75,14 +75,11 @@ const {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
 
-      // ── 1. LENIS — correct v1.0.42 constructor options ───────────────
-      // v1.0.42 removed: smooth, direction, gestureDirection, smoothTouch
-      // v1.0.42 uses:    smoothWheel, orientation, gestureOrientation, syncTouch
+      // ── 1. LENIS — Snappy, lightweight configuration ──────────────────
       const lenis = new Lenis({
         smoothWheel: true,
         syncTouch: false,
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        lerp: 0.12, // Faster, snappier smoothing (no heavy duration)
         orientation: "vertical",
         gestureOrientation: "vertical",
         touchMultiplier: 2,
@@ -227,35 +224,37 @@ const {
         }
 
         // Desktop: Pin and scrub reveal
-        gsap.set(cards, { opacity: 0, y: 50 });
+        // Start cards lower and hidden
+        gsap.set(cards, { opacity: 0, y: 80 });
         if (btn) gsap.set(btn, { opacity: 0, y: 20 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: section,
-            start: "top 12%", // Pin when the section header is near the top
-            end: "+=120%",    // Scroll distance to keep pinned
+            start: "top 8%", // Pin when the section header is near the top
+            end: "+=150%",   // Slightly faster to scroll through
             pin: true,
-            scrub: 1,         // Smooth scrubbing
+            scrub: true,     // Direct 1:1 scrub (Lenis already provides the smoothing, no double-lag)
             anticipatePin: 1
           }
         });
 
         // Stagger the cards sliding up and fading in based on scroll progress
+        // First card starts immediately at the beginning of the pin (0)
         cards.forEach((card, i) => {
           tl.to(card, {
             opacity: 1,
             y: 0,
             duration: 1,
             ease: "power2.out"
-          }, i * 0.4); // Overlap the animations slightly
+          }, i * 0.75); // Spaced out so you have to scroll to see each next card
         });
 
         if (btn) {
           tl.to(btn, {
             opacity: 1,
             y: 0,
-            duration: 0.5,
+            duration: 0.6,
             ease: "power2.out"
           }, "-=0.2");
         }
