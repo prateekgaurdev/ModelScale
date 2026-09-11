@@ -1,0 +1,57 @@
+---
+import { Sparkles, Shield, Handshake } from 'lucide-react';
+
+const alliances = [
+  { name: 'Amazon Web Services', tier: 'Premier Tier Partner', logo: '/assets/images/aws-partnership-logo.svg' },
+  { name: 'Google Cloud Platform', tier: 'Premier Service Partner', logo: '/assets/images/google-cloud-platform.svg' },
+  { name: 'Microsoft Azure', tier: 'Gold Solutions Partner', logo: '/assets/images/azure-partnership-logo.svg' },
+  { name: 'Databricks', tier: 'Data & AI Elite Partner', logo: '/assets/images/databricks.svg' },
+  { name: 'Docker', tier: 'Enterprise Container Alliance', logo: '/assets/images/docker-1.svg' },
+  { name: 'Boomi', tier: 'iPaaS & Integration Partner', logo: '/assets/images/boomi.svg' },
+  { name: 'Cloudinary', tier: 'Media AI Delivery Partner', logo: '/assets/images/cloudinary.svg' },
+  { name: 'HubSpot', tier: 'Solutions Partner', logo: '/assets/images/hubspot-partnership-logo.svg' },
+];
+---
+
+<section class="py-20 bg-black relative border-t border-white/10 overflow-hidden">
+  <div class="layout-container-lg relative z-10">
+    
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-nexora-yellow uppercase tracking-wider mb-3">
+        <Handshake className="w-3.5 h-3.5" />
+        <span>Ecosystem Alliances</span>
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-extrabold line-anim text-white tracking-tight">
+        Strategic Alliances that Power Global Scale
+      </h2>
+      <p class="mt-3 text-sm text-gray-400 max-w-xl mx-auto font-normal">
+        Co-engineering directly with cloud pioneers to deliver validated architectures, priority compute quotas, and enterprise-grade reliability.
+      </p>
+    </div>
+
+    {/* Alliances Grid */}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+      {alliances.map((partner) => (
+        <div class="p-6 rounded-2xl bg-[#0f1218] border border-white/10 hover:border-nexora-blue/40 transition-all duration-300 flex flex-col items-center justify-center text-center group hover:-translate-y-1">
+          <div class="h-12 flex items-center justify-center mb-3">
+            <img 
+              src={partner.logo} 
+              alt={partner.name} 
+              class="max-h-8 max-w-[130px] object-contain filter grayscale group-hover:grayscale-0 group-hover:brightness-125 transition-all duration-300"
+              onError={(e) => {
+                (e.currentTarget as HTMLElement).style.display = 'none';
+              }}
+            />
+          </div>
+          <span class="text-sm font-bold text-white group-hover:text-blue-300 transition-colors">
+            {partner.name}
+          </span>
+          <span class="text-[11px] font-mono text-gray-400 mt-0.5">
+            {partner.tier}
+          </span>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

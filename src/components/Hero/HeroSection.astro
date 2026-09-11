@@ -1,0 +1,395 @@
+---
+// HeroSection.astro — two-column layout matching appinventiv.com exactly
+// LEFT: max-width 800px, left-aligned h1 + subtext + CTA
+// RIGHT: award badges carousel aligned to flex-end (bottom-right)
+// Background: fullscreen video + gradient overlay
+---
+
+<section class="nexora-hero" id="hero">
+
+  <!-- ============================================
+       VIDEO BACKGROUND
+       ============================================ -->
+  <div class="hero-video-wrapper">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      webkit-playsinline
+      preload="none"
+      poster="/assets/images/home-hero-poster-1.webp"
+      controlslist="nodownload noplaybackrate"
+    >
+      <source src="/assets/images/video/appi-home-hero-video.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- Overlay layers -->
+  <div class="hero-overlay-dark"></div>
+  <div class="hero-overlay-gradient"></div>
+
+  <!-- Gradient image overlay (matching appinventiv's home-hero-content-gradient) -->
+  <div class="hero-gradient-img">
+    <img
+      src="/assets/images/home-hero-content-gradient.webp"
+      alt=""
+      aria-hidden="true"
+    />
+  </div>
+
+  <!-- ============================================
+       MAIN TWO-COLUMN LAYOUT
+       ============================================ -->
+  <div class="hero-content-wrapper container-xl">
+
+    <!-- LEFT COLUMN: Text content -->
+    <div class="hero-text-col">
+
+      <!-- Eyebrow -->
+      <div class="hero-eyebrow reveal">
+        <span class="pulse-dot"></span>
+        <span>AI-First Digital Engineering</span>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="hero-h1 reveal delay-1">
+        Engineering the Next<br>
+        Generation of Digital<br>
+        Systems with AI
+      </h1>
+
+      <!-- Subtext -->
+      <p class="hero-subtext reveal delay-2">
+        Nexora engineers secure, scalable digital systems by combining strong
+        architecture, data engineering, and AI capabilities — helping
+        organizations move from strategy to reliable systems in production.
+      </p>
+
+      <!-- CTA -->
+      <div class="hero-cta reveal delay-3">
+        <button
+          class="swap-text-button btn-blue-hero"
+          onclick="window.dispatchEvent(new CustomEvent('open-contact-modal',{detail:{source:'hero-cta'}}))"
+        >
+          <span class="text-original"><span>Consult Our Strategy Team</span></span>
+          <span class="text-hover"><span>Consult Our Strategy Team</span></span>
+          <div class="button__icon-wrapper">
+            <svg class="button__icon-svg" viewBox="0 0 14 15" fill="none" width="12">
+              <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="white"/>
+            </svg>
+            <svg class="button__icon-svg button__icon-svg--copy" viewBox="0 0 14 15" fill="none" width="12">
+              <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="white"/>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Awards carousel (align-self: flex-end) -->
+    <div class="hero-awards-col reveal delay-2">
+      <div class="hero-awards-track" id="heroAwardsTrack">
+
+        <div class="award-box">
+          <img
+            src="/assets/images/deloitte-fast50.svg"
+            alt="Deloitte Technology Fast 50"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <div class="award-box award-box--et">
+          <img
+            src="/assets/images/et-industry-change-maker.svg"
+            alt="Leader in AI-First Product Engineering — Economic Times"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <div class="award-box">
+          <img
+            src="/assets/images/indias-growth-champions-award.svg"
+            alt="India's Growth Champions — The Economic Times"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <div class="award-box">
+          <img
+            src="/assets/images/entrepreneur-awards.svg"
+            alt="Entrepreneur Awards"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <div class="award-box award-box--times">
+          <img
+            src="/assets/images/times-business-awards2.svg"
+            alt="Times Business Awards"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+        <div class="award-box">
+          <img
+            src="/assets/images/clutch-2025-badge.svg"
+            alt="Clutch Global Leader 2025"
+            onerror="this.style.display='none'"
+          />
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<style>
+  /* =============================================
+     HERO SECTION
+     ============================================= */
+  .nexora-hero {
+    position: relative;
+    min-height: 100dvh;
+    padding-top: 67px;        /* compensate for fixed header height */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  /* --- Video --- */
+  .hero-video-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* --- Overlays --- */
+  .hero-overlay-dark {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.60);
+  }
+  .hero-overlay-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.95) 100%);
+  }
+  .hero-gradient-img {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .hero-gradient-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+
+  /* --- Two-column wrapper --- */
+  .hero-content-wrapper {
+    position: relative;
+    z-index: 4;
+    flex: 1;
+    display: flex;
+    align-items: center;        /* vertically center both columns */
+    justify-content: space-between;
+    gap: 3rem;
+    padding-top: 0;
+    padding-bottom: 6rem;
+    min-height: calc(100dvh - 67px);
+  }
+
+  /* --- LEFT column --- */
+  .hero-text-col {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  /* Eyebrow */
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2rem;
+  }
+  .pulse-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1163fb;
+    animation: pulse-dot 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* H1 */
+  .hero-h1 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: clamp(2.5rem, 3rem + 1.875vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 1.75rem 0;
+  }
+
+  /* Subtext */
+  .hero-subtext {
+    font-size: clamp(0.9375rem, 0.9rem + 0.3vw, 1.1rem);
+    font-weight: 400;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.72);
+    max-width: 620px;
+    margin: 0 0 2.5rem 0;
+  }
+
+  /* CTA */
+  .hero-cta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* --- RIGHT column — Awards carousel --- */
+  .hero-awards-col {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 540px;
+    align-self: flex-end;           /* stick to bottom of the flex container */
+    padding-bottom: 0;
+  }
+
+  .hero-awards-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .award-box {
+    height: 104px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 16px;
+    padding: 10px 14px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .award-box:hover {
+    background: rgba(17, 99, 251, 0.12);
+    border-color: rgba(17, 99, 251, 0.4);
+  }
+  .award-box img {
+    display: block;
+    max-height: 56px;
+    max-width: 140px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(1.15);
+    opacity: 0.9;
+  }
+  .award-box--et img   { max-height: 60px; }
+  .award-box--times img { max-height: 50px; }
+
+  /* =============================================
+     SWAP-TEXT-BUTTON — Hero variant (blue filled)
+     ============================================= */
+  .btn-blue-hero {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    overflow: hidden;
+    background: #1163fb;
+    color: #fff;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
+    padding: 14px 24px 14px 24px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 0 24px -6px rgba(17, 99, 251, 0.6);
+    transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+  }
+  .btn-blue-hero:hover {
+    background: #0c4fcb;
+    box-shadow: 0 0 40px -8px rgba(17, 99, 251, 0.7);
+    transform: translateY(-2px);
+  }
+  .btn-blue-hero:active { transform: scale(0.97); }
+
+  /* =============================================
+     RESPONSIVE
+     ============================================= */
+  @media (max-width: 1200px) {
+    .hero-awards-col { max-width: 440px; }
+    .hero-awards-track { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .award-box { height: 90px; }
+  }
+
+  @media (max-width: 900px) {
+    .hero-content-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding-bottom: 3rem;
+      min-height: calc(100dvh - 67px);
+    }
+    .hero-text-col { max-width: 100%; }
+    .hero-awards-col {
+      max-width: 100%;
+      width: 100%;
+      align-self: auto;
+    }
+    .hero-awards-track { grid-template-columns: repeat(4, 1fr); }
+    .award-box { height: 80px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-awards-track { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .award-box { height: 72px; }
+    .award-box img { max-height: 40px; }
+    .hero-h1 { font-size: 2.2rem; }
+  }
+</style>

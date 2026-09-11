@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/Hero/HeroSection.astro';
+import AIServicesSplitScroll from '../components/Services/AIServicesSplitScroll.tsx';
+import ServicesMatrix from '../components/Services/ServicesMatrix.astro';
+import PortfolioSlider from '../components/Portfolio/PortfolioSlider.tsx';
+import NexoraAISpotlight from '../components/NexoraAI/NexoraAISpotlight.astro';
+import TestimonialsCarousel from '../components/Testimonials/TestimonialsCarousel.tsx';
+import GlobalLeadersGrid from '../components/GlobalLeaders/GlobalLeadersGrid.astro';
+import TechExpertiseMatrix from '../components/TechExpertise/TechExpertiseMatrix.tsx';
+import StrategicAlliances from '../components/Alliances/StrategicAlliances.astro';
+import AwardsTimeline from '../components/Awards/AwardsTimeline.astro';
+import ComplianceSection from '../components/Compliance/ComplianceSection.tsx';
+import FAQAccordion from '../components/FAQ/FAQAccordion.tsx';
+---
+
+<BaseLayout>
+  <!-- Hero: two-column, video bg, awards carousel bottom-right -->
+  <HeroSection />
+
+  <!-- Diagonal staircase services grid (light bg) -->
+  <ServicesMatrix />
+
+  <!-- AI Suite sticky split-scroll -->
+  <AIServicesSplitScroll client:visible />
+
+  <!-- Portfolio slider: 9 real case studies with progress bar -->
+  <PortfolioSlider client:visible />
+
+  <!-- NexoraAI Enterprise Spotlight -->
+  <NexoraAISpotlight />
+
+  <!-- C-Suite testimonials: vertical slider -->
+  <TestimonialsCarousel client:visible />
+
+  <!-- Global Leaders dual-direction marquee -->
+  <GlobalLeadersGrid />
+
+  <!-- Technical Expertise: hover-expand grid (11 cards) -->
+  <TechExpertiseMatrix client:visible />
+
+  <!-- Strategic Cloud Alliances -->
+  <StrategicAlliances />
+
+  <!-- Awards Timeline -->
+  <AwardsTimeline />
+
+  <!-- Compliance: timed auto-advancing accordion with progress bars -->
+  <ComplianceSection client:visible />
+
+  <!-- FAQ Accordion -->
+  <FAQAccordion client:visible />
+</BaseLayout>

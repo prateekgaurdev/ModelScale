@@ -1,0 +1,307 @@
+---
+// ServicesMatrix.astro — diagonal staircase grid matching appinventiv.com
+// Each row (4 rows × 4 columns) has ONE real card at the diagonal position.
+// Empty display-block spacers fill the rest.
+// Section uses LIGHT background, cards are white.
+
+const services = [
+  {
+    num: '01',
+    title: 'Strategic Technology Consulting',
+    desc: 'From architecture audits to digital transformation strategy, we help leaders align technology with business goals for measurable ROI.',
+    icon: '/assets/images/consulting-services-icon.svg',
+    cta: 'View Consulting Services',
+    href: '#faq',
+  },
+  {
+    num: '02',
+    title: 'Digital Product Development & Engineering',
+    desc: 'Full-lifecycle software engineering — from cloud-native applications to complex ERP systems, across web and mobile.',
+    icon: '/assets/images/product-engineering-icon-1.svg',
+    cta: 'View Product Engineering Services',
+    href: '#ai-suite',
+  },
+  {
+    num: '03',
+    title: 'AI, Data and Analytics Solutions',
+    desc: 'We integrate advanced AI, generative AI, and machine learning models to automate operations, predict trends, and personalise experiences at scale.',
+    icon: '/assets/images/artificial-intelligence-icon-1.svg',
+    cta: 'View Artificial Intelligence Services',
+    href: '#ai-suite',
+  },
+  {
+    num: '04',
+    title: 'Cloud Operations and Cybersecurity',
+    desc: 'We engineer cloud-native environments rooted in Zero Trust principles, ensuring your infrastructure is as scalable as it is impenetrable.',
+    icon: '/assets/images/cybersecurity-icon-3.svg',
+    cta: 'View Cybersecurity Services',
+    href: '#compliance',
+  },
+];
+---
+
+<section id="services" class="services-section">
+  <div class="container-xl">
+
+    <!-- Section Header -->
+    <div class="services-header">
+      <h2 class="reveal text-headline line-anim services-heading">
+        <span>Beyond Development.</span>
+        <span>We Deliver Transformation.</span>
+      </h2>
+    </div>
+
+    <!-- ============================================
+         DIAGONAL STAIRCASE GRID
+         4 rows, 4 columns. ONE card per row at
+         the diagonal column position.
+         ============================================ -->
+    <div class="services-grid">
+
+      {services.map((svc, rowIdx) => (
+        <!-- Each row: 4 columns, only col[rowIdx] is a real card -->
+        <div class="services-row">
+          {[0, 1, 2, 3].map((colIdx) => (
+            colIdx === rowIdx ? (
+              <!-- REAL CARD -->
+              <div class={`service-card reveal reveal-scale delay-${rowIdx + 1}`}>
+                <div class="service-card-inner">
+
+                  <!-- Icon -->
+                  <div class="service-icon-wrap">
+                    <img
+                      src={svc.icon}
+                      alt={svc.title}
+                      class="service-icon-img"
+                      onerror="this.style.display='none'"
+                    />
+                  </div>
+
+                  <!-- Content -->
+                  <div class="service-content">
+                    <h3 class="service-title">{svc.title}</h3>
+                    <p class="service-desc">{svc.desc}</p>
+                  </div>
+
+                  <!-- CTA -->
+                  <div class="service-cta-wrap">
+                    <a
+                      href={svc.href}
+                      class="swap-text-button transparent-wht-btn service-btn"
+                    >
+                      <span class="text-original">
+                        <span class="blk-text">{svc.cta}</span>
+                      </span>
+                      <span class="text-hover">
+                        <span class="blk-text">{svc.cta}</span>
+                      </span>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            ) : (
+              <!-- EMPTY SPACER -->
+              <div class="service-card service-card--empty"></div>
+            )
+          ))}
+        </div>
+      ))}
+
+    </div>
+
+    <!-- View All Services -->
+    <div class="services-view-all reveal">
+      <a href="#ai-suite" class="swap-text-button btn-view-all">
+        <span class="text-original"><span>View All Services</span></span>
+        <span class="text-hover"><span>View All Services</span></span>
+        <div class="button__icon-wrapper">
+          <svg class="button__icon-svg" viewBox="0 0 14 15" fill="none" width="11">
+            <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="#1163fb"/>
+          </svg>
+          <svg class="button__icon-svg button__icon-svg--copy" viewBox="0 0 14 15" fill="none" width="11">
+            <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="#1163fb"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* =============================================
+     SERVICES SECTION — Light background
+     Exactly matching appinventiv.com
+     ============================================= */
+  .services-section {
+    background: #f8f7f4;
+    padding: clamp(48px, 6vw, 96px) 0;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+  }
+
+  .services-heading {
+    color: #0f0f0f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15em;
+  }
+  .services-heading span {
+    display: block;
+  }
+
+  /* ---- Diagonal Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid #e8e8e4;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .services-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid #e8e8e4;
+  }
+  .services-row:last-child {
+    border-bottom: none;
+  }
+
+  /* Individual cells */
+  .service-card {
+    padding: 0;
+    border-right: 1px solid #e8e8e4;
+    min-height: 280px;
+  }
+  .service-card:last-child {
+    border-right: none;
+  }
+
+  /* Empty spacer cells — subtle cross-hatch */
+  .service-card--empty {
+    background: #f8f7f4;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* Real card cell */
+  .service-card:not(.service-card--empty) {
+    background: #fff;
+  }
+
+  .service-card-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: clamp(1.75rem, 2.5vw, 2.5rem);
+    gap: 2rem;
+  }
+
+  /* Icon */
+  .service-icon-wrap {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ecf3ff;
+    border-radius: 14px;
+    padding: 12px;
+    flex-shrink: 0;
+  }
+  .service-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: none;
+  }
+
+  /* Content */
+  .service-content { flex: 1; }
+
+  .service-title {
+    font-size: clamp(1.05rem, 1.1rem + 0.3vw, 1.375rem);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: #0f0f0f;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #555;
+    margin: 0;
+  }
+
+  /* CTA */
+  .service-cta-wrap { margin-top: auto; }
+
+  .service-btn {
+    padding: 10px 18px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600;
+    border-color: #d4d4d4;
+    color: #0f0f0f;
+    border-radius: 8px !important;
+    background: transparent;
+    display: inline-flex;
+  }
+
+  /* View All Services button */
+  .services-view-all {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.5rem;
+  }
+
+  .btn-view-all {
+    background: transparent;
+    color: #0f0f0f;
+    border: 1px solid #aaa;
+    font-size: 0.9375rem;
+    padding: 13px 28px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .btn-view-all:hover {
+    border-color: #444;
+    background: rgba(0,0,0,0.03);
+  }
+  .btn-view-all .button__icon-wrapper {
+    background: rgba(0,0,0,0.06);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .services-grid {
+      grid-template-rows: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .services-row {
+      grid-template-columns: 1fr;
+    }
+    .service-card--empty { display: none; }
+    .service-card:not(.service-card--empty) {
+      border-right: none;
+      border-bottom: 1px solid #e8e8e4;
+    }
+    .services-row:last-child .service-card:not(.service-card--empty) {
+      border-bottom: none;
+    }
+    .service-card { min-height: auto; }
+  }
+</style>

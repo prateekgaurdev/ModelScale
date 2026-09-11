@@ -1,0 +1,305 @@
+---
+import Navbar from '../components/Header/Navbar.tsx';
+import Footer from '../components/Footer/Footer.astro';
+import ContactModal from '../components/Modals/ContactModal.tsx';
+import ExitIntentModal from '../components/Modals/ExitIntentModal.tsx';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'NEXORA | Digital Product Engineering & AI Consulting',
+  description = 'NEXORA is a global digital product engineering and AI consulting company. We deliver 3,000+ mission-critical products for Fortune 500 enterprises worldwide.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/assets/images/inventiv-ai-logo.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+
+  <body>
+    <!-- Shared ambient glow layer -->
+    <div class="ambient-layer" aria-hidden="true">
+      <div class="ambient-orb" style="width:900px;height:700px;background:rgba(37,99,235,0.08);top:-240px;left:50%;transform:translateX(-50%)"></div>
+      <div class="ambient-orb" style="width:600px;height:600px;background:rgba(30,58,138,0.06);top:60vh;left:-160px"></div>
+      <div class="ambient-orb" style="width:500px;height:500px;background:rgba(49,46,129,0.05);top:140vh;right:-128px"></div>
+    </div>
+
+    <Navbar client:load />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <ContactModal client:load />
+    <ExitIntentModal client:load />
+
+    <script>
+      /**
+       * Nexora Animation Engine
+       * ─────────────────────────────────────────────────────────────────
+       * 1. Lenis v1.0.42 smooth scroll (correct API options)
+       * 2. GSAP ScrollTrigger integration via lenis.on("scroll")
+       * 3. .line-anim per-character text reveal (GSAP stagger)
+       * 4. .reveal IntersectionObserver entry animations
+       * 5. Services diagonal cards — CSS + IntersectionObserver (no pin conflict)
+       * 6. Mouse followers for portfolio & testimonials
+       * ─────────────────────────────────────────────────────────────────
+       */
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+      import Lenis from "@studio-freight/lenis";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // ── Scroll-to-top before anything else ───────────────────────────
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+
+      // ── 1. LENIS — correct v1.0.42 constructor options ───────────────
+      // v1.0.42 removed: smooth, direction, gestureDirection, smoothTouch
+      // v1.0.42 uses:    smoothWheel, orientation, gestureOrientation, syncTouch
+      const lenis = new Lenis({
+        smoothWheel: true,
+        syncTouch: false,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        touchMultiplier: 2,
+        wheelMultiplier: 1,
+        infinite: false,
+        autoResize: true,
+      });
+
+      // Expose on window so React components can access synchronously
+      window.__lenis = lenis;
+      window.__gsap  = gsap;
+      window.__ST    = ScrollTrigger;
+
+      // ── GSAP + Lenis integration ──────────────────────────────────────
+      // Correct pattern: lenis emits scroll → tell ScrollTrigger to update
+      lenis.on("scroll", () => ScrollTrigger.update());
+
+      // Drive Lenis from GSAP ticker (NOT requestAnimationFrame directly)
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      // Sync ScrollTrigger resize with Lenis
+      ScrollTrigger.addEventListener("refresh", () => lenis.resize());
+
+      // Scroll to top once everything has rendered
+      window.addEventListener("load", () => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            lenis.scrollTo(0, { immediate: true, force: true });
+            ScrollTrigger.clearScrollMemory();
+            ScrollTrigger.refresh(true);
+          });
+        });
+      });
+
+      // Keep Lenis in sync with native scroll (e.g. keyboard, scrollbar drag)
+      window.addEventListener("scroll", () => {
+        if (!lenis.isScrolling) {
+          lenis.scrollTo(window.scrollY, { immediate: true });
+        }
+      }, { passive: true });
+
+      // ── 2. .reveal — IntersectionObserver ────────────────────────────
+      function initReveal() {
+        const targets = document.querySelectorAll(".reveal, .reveal-blur, .reveal-scale");
+        if (!targets.length) return;
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          }),
+          { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+        );
+        targets.forEach((el) => io.observe(el));
+      }
+
+      // ── 3. .line-anim — per-character GSAP stagger ───────────────────
+      function initLineAnimations() {
+        document.querySelectorAll(".line-anim").forEach((heading) => {
+          const el = heading;
+          if (el.dataset.lineAnimDone) return;
+          el.dataset.lineAnimDone = "1";
+
+          el.querySelectorAll("span").forEach((lineSpan) => {
+            const walker = document.createTreeWalker(lineSpan, NodeFilter.SHOW_TEXT);
+            const textNodes = [];
+            let node;
+            while ((node = walker.nextNode())) {
+              if (node.nodeValue?.trim()) textNodes.push(node);
+            }
+            textNodes.forEach((textNode) => {
+              const parent = textNode.parentNode;
+              const text   = textNode.nodeValue;
+              const frag   = document.createDocumentFragment();
+
+              // Desktop: per character. Mobile: per word.
+              if (window.innerWidth <= 767) {
+                text.split(" ").forEach((word, i, arr) => {
+                  const s = document.createElement("span");
+                  s.textContent = word;
+                  s.style.display = "inline-block";
+                  frag.appendChild(s);
+                  if (i < arr.length - 1) frag.appendChild(document.createTextNode(" "));
+                });
+              } else {
+                [...text].forEach((char) => {
+                  const s = document.createElement("span");
+                  s.textContent = char === " " ? "\u00A0" : char;
+                  s.style.display = "inline-block";
+                  frag.appendChild(s);
+                });
+              }
+              parent.replaceChild(frag, textNode);
+            });
+          });
+
+          const chars = el.querySelectorAll("span span");
+          if (!chars.length) return;
+
+          gsap.fromTo(chars,
+            { y: 12, opacity: 0 },
+            {
+              y: 0, opacity: 1,
+              stagger: 0.008,
+              ease: "power2.out",
+              duration: 0.25,
+              scrollTrigger: {
+                trigger: el,
+                start: "top 85%",
+                once: true,
+                // IMPORTANT: tell ScrollTrigger to use Lenis scroll position
+                scroller: window,
+              },
+            }
+          );
+        });
+      }
+
+      // ── 4. Services — stagger reveal (replaces broken pin animation) ─
+      // Each service card fades + slides up when it enters viewport.
+      // More reliable than ScrollTrigger.pin() with Lenis.
+      function initServicesReveal() {
+        const cards = document.querySelectorAll(".service-card:not(.service-card--empty)");
+        if (!cards.length) return;
+
+        cards.forEach((card, i) => {
+          gsap.fromTo(card,
+            { y: 60, opacity: 0 },
+            {
+              y: 0, opacity: 1,
+              duration: 0.65,
+              ease: "power3.out",
+              delay: i * 0.12,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 88%",
+                once: true,
+                scroller: window,
+              },
+            }
+          );
+        });
+      }
+
+      // ── 5. Mouse followers ────────────────────────────────────────────
+      function initMouseFollowers() {
+        // Portfolio DRAG follower
+        const portSection  = document.querySelector(".portfolio-section");
+        const portFollower = document.querySelector(".portfolio-follower");
+        if (portSection && portFollower) {
+          let rafId = null;
+          let inside = false;
+          gsap.set(portFollower, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+
+          const show = () => gsap.to(portFollower, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+          const hide = () => gsap.to(portFollower, { scale: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+
+          document.addEventListener("mousemove", (e) => {
+            const rect = portSection.getBoundingClientRect();
+            const inArea = e.clientY >= rect.top - 20 && e.clientY <= rect.bottom + 80;
+            if (inArea) {
+              if (!inside) { inside = true; show(); }
+              if (rafId) cancelAnimationFrame(rafId);
+              rafId = requestAnimationFrame(() => {
+                gsap.to(portFollower, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.5, ease: "power3.out" });
+              });
+            } else if (inside) { inside = false; hide(); }
+          });
+        }
+
+        // Testimonials arrow follower
+        const testRight   = document.querySelector(".testimonials-right");
+        const testFollow  = document.querySelector(".testimonial-mouse-follower");
+        const testArrow   = testFollow?.querySelector("svg");
+        if (testRight && testFollow && testArrow) {
+          let rafId2 = null;
+          let inside2 = false;
+          gsap.set(testFollow, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
+
+          const show2 = () => gsap.to(testFollow, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
+          const hide2 = () => gsap.to(testFollow, { scale: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+
+          document.addEventListener("mousemove", (e) => {
+            const rect = testRight.getBoundingClientRect();
+            const inArea = e.clientX >= rect.left && e.clientX <= rect.right &&
+                           e.clientY >= rect.top  && e.clientY <= rect.bottom;
+            if (inArea) {
+              if (!inside2) { inside2 = true; show2(); }
+              const mid = rect.top + rect.height / 2;
+              gsap.to(testArrow, { rotation: e.clientY < mid ? 0 : 180, duration: 0.18, ease: "power2.out" });
+              if (rafId2) cancelAnimationFrame(rafId2);
+              rafId2 = requestAnimationFrame(() => {
+                gsap.to(testFollow, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.45, ease: "power3.out" });
+              });
+            } else if (inside2) { inside2 = false; hide2(); }
+          });
+        }
+      }
+
+      // ── Run all ───────────────────────────────────────────────────────
+      function runAll() {
+        initReveal();
+        initLineAnimations();
+        initServicesReveal();
+        initMouseFollowers();
+        // Final refresh after everything is set up
+        setTimeout(() => ScrollTrigger.refresh(), 400);
+      }
+
+      if (document.readyState === "complete") {
+        runAll();
+      } else {
+        window.addEventListener("load", runAll);
+      }
+    </script>
+  </body>
+</html>

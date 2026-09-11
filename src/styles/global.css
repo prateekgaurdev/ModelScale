@@ -1,0 +1,448 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BASE LAYER
+   ============================================================ */
+@layer base {
+  :root {
+    --blue: #1163FB;
+    --blue-hover: #0c4fcb;
+    --blue-glow: rgba(17, 99, 251, 0.35);
+    --surface: #080a0f;
+    --card: #0d1017;
+    --border: #1e2330;
+    --border-subtle: rgba(255,255,255,0.07);
+    --text-primary: #ffffff;
+    --text-secondary: #a0aec0;
+    --text-muted: #5a6480;
+    --spring: cubic-bezier(0.22, 1, 0.36, 1);
+    --reveal: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  *,
+  *::before,
+  *::after { box-sizing: border-box; }
+
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-feature-settings: "cv11", "salt", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto;
+    overflow-x: clip;
+    background-color: #000;
+  }
+
+  body {
+    background-color: #000;
+    color: #fff;
+    overflow-x: clip;
+    min-height: 100dvh;
+  }
+
+  /* Refined scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1e2330; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
+
+  /* Selection */
+  ::selection { background: rgba(17, 99, 251, 0.3); color: #fff; }
+
+  /* Heading resets */
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-feature-settings: "cv11", "salt";
+    letter-spacing: -0.02em;
+  }
+
+  p { margin: 0; }
+  a { text-decoration: none; color: inherit; }
+  button { font-family: inherit; }
+  img, video { display: block; max-width: 100%; }
+}
+
+/* ============================================================
+   COMPONENT LAYER
+   ============================================================ */
+@layer components {
+
+  /* ---- Layout ---- */
+  .container-xl {
+    width: 100%;
+    max-width: 1580px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3vw, 2.5rem);
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .container-lg {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: clamp(1rem, 3vw, 2rem);
+    padding-right: clamp(1rem, 3vw, 2rem);
+  }
+
+  .container-md {
+    width: 100%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Keep legacy aliases */
+  .layout-container { @apply container-xl; }
+  .layout-container-lg { @apply container-xl; }
+  .layout-container-sm { @apply container-md; }
+
+  /* ---- Section spacing ---- */
+  .section-gap { @apply py-24 lg:py-32; }
+  .section-gap-sm { @apply py-16 lg:py-24; }
+
+  /* ---- Section divider ---- */
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ---- Eyebrow / label ---- */
+  .eyebrow {
+    @apply inline-flex items-center gap-2;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+
+  /* ---- Typography utilities ---- */
+  .text-display {
+    font-size: clamp(2.75rem, 5vw + 1rem, 5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .text-headline {
+    font-size: clamp(2rem, 3.5vw + 0.5rem, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+
+  .text-title {
+    font-size: clamp(1.375rem, 2vw + 0.25rem, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 700;
+  }
+
+  .text-lead {
+    font-size: clamp(1rem, 1.2vw + 0.2rem, 1.25rem);
+    line-height: 1.7;
+    font-weight: 400;
+    color: #9ca3af;
+  }
+
+  /* ---- Buttons ---- */
+
+  /* Primary — blue filled */
+  .btn {
+    @apply inline-flex items-center gap-2.5 font-semibold;
+    position: relative;
+    overflow: hidden;
+    border-radius: 9999px;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.9375rem;
+    line-height: 1;
+    transition: background 0.25s var(--spring), box-shadow 0.25s var(--spring), transform 0.2s var(--spring);
+    cursor: pointer;
+  }
+
+  .btn-blue {
+    @apply btn;
+    background: var(--blue);
+    color: #fff;
+    box-shadow: 0 0 0 0 var(--blue-glow);
+  }
+  .btn-blue:hover {
+    background: var(--blue-hover);
+    box-shadow: 0 0 24px -4px var(--blue-glow);
+    transform: translateY(-1px);
+  }
+  .btn-blue:active { transform: scale(0.97) translateY(0); }
+
+  /* Ghost */
+  .btn-ghost {
+    @apply btn;
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  /* Button trailing icon — "button-in-button" */
+  .btn-icon {
+    @apply flex items-center justify-center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.15);
+    transition: transform 0.25s var(--spring);
+    flex-shrink: 0;
+  }
+  .btn-blue:hover .btn-icon,
+  .btn-ghost:hover .btn-icon {
+    transform: translate(2px, -2px);
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    transition: border-color 0.3s var(--spring), transform 0.3s var(--spring), box-shadow 0.3s var(--spring);
+    box-shadow: 0 8px 40px -12px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .card:hover {
+    border-color: rgba(17, 99, 251, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 50px -12px rgba(0,0,0,0.7), 0 0 20px -8px rgba(17,99,251,0.3), inset 0 1px 0 rgba(255,255,255,0.07);
+  }
+
+  /* ---- Underline link ---- */
+  .link-underline {
+    position: relative;
+    display: inline;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 1px;
+    transition: background-size 0.35s var(--spring);
+  }
+  .link-underline:hover { background-size: 0% 1px; }
+
+  /* ---- Gradient text ---- */
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #4d8aff 0%, #ffffff 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ---- Marquee mask ---- */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+}
+
+/* ============================================================
+   SCROLL-REVEAL SYSTEM
+   Default state: elements are invisible + shifted.
+   JavaScript adds .is-visible when they enter the viewport.
+   ============================================================ */
+@layer utilities {
+
+  /* Base reveal state */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s var(--reveal), transform 0.7s var(--reveal);
+    will-change: opacity, transform;
+  }
+
+  /* Blur-in variant for hero headings */
+  .reveal-blur {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(6px);
+    transition: opacity 0.8s var(--reveal), transform 0.8s var(--reveal), filter 0.8s var(--reveal);
+    will-change: opacity, transform, filter;
+  }
+
+  /* Scale-in variant for cards */
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.96) translateY(16px);
+    transition: opacity 0.6s var(--reveal), transform 0.6s var(--reveal);
+    will-change: opacity, transform;
+  }
+
+  /* Stagger delays */
+  .delay-1 { transition-delay: 80ms; }
+  .delay-2 { transition-delay: 160ms; }
+  .delay-3 { transition-delay: 240ms; }
+  .delay-4 { transition-delay: 320ms; }
+  .delay-5 { transition-delay: 400ms; }
+  .delay-6 { transition-delay: 480ms; }
+
+  /* Triggered state — JS adds this */
+  .is-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* ============================================================
+   SWAP-TEXT-BUTTON ANIMATION SYSTEM
+   Matches appinventiv.com's dual-span + dual-SVG hover effect.
+   .text-original slides up-out on hover.
+   .text-hover slides up-in on hover.
+   Both SVGs do the same vertical swap.
+   ============================================================ */
+
+.swap-text-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  border-radius: 9999px;
+  padding: 14px 26px;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+/* Text spans — stacked and swap on hover */
+.swap-text-button .text-original,
+.swap-text-button .text-hover {
+  display: flex;
+  align-items: center;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.3s ease;
+}
+.swap-text-button .text-hover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  transform: translateY(130%);
+  opacity: 0;
+  padding-left: inherit;
+  padding-right: inherit;
+}
+/* adjust for left-aligned buttons */
+.swap-text-button .text-hover {
+  left: 26px;
+  right: auto;
+  justify-content: flex-start;
+}
+
+.swap-text-button:hover .text-original {
+  transform: translateY(-130%);
+  opacity: 0;
+}
+.swap-text-button:hover .text-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Icon wrapper */
+.button__icon-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+  transition: background 0.25s ease;
+}
+.swap-text-button:hover .button__icon-wrapper {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Two SVGs — real (exits up) and copy (enters from below) */
+.button__icon-svg {
+  display: block;
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.3s ease;
+  flex-shrink: 0;
+}
+.button__icon-svg--copy {
+  position: absolute;
+  transform: translateY(130%);
+  opacity: 0;
+}
+.swap-text-button:hover .button__icon-svg:not(.button__icon-svg--copy) {
+  transform: translateY(-130%);
+  opacity: 0;
+}
+.swap-text-button:hover .button__icon-svg--copy {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ---- Variant: white background ---- */
+.swap-text-button.wht-btn {
+  background: #fff;
+  color: #0f0f0f;
+}
+.swap-text-button.wht-btn .button__icon-wrapper {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ---- Variant: transparent with white border ---- */
+.swap-text-button.transparent-wht-btn {
+  background: transparent;
+  color: #0f0f0f;
+  border: 1px solid #d4d4d4;
+}
+.swap-text-button.transparent-wht-btn:hover {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: #bbb;
+}
+
+/* ---- Variant: transparent for dark bg ---- */
+.swap-text-button.transparent-blk-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+.swap-text-button.transparent-blk-btn:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* ============================================================
+   GLOBAL AMBIENT LAYER
+   One shared glow layer, not one per section.
+   ============================================================ */
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(160px);
+  pointer-events: none;
+}

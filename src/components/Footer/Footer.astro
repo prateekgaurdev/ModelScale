@@ -1,0 +1,210 @@
+---
+import { Globe2, MapPin, Mail, Phone, ArrowUpRight, ShieldCheck, Heart } from 'lucide-react';
+
+const offices = [
+  {
+    country: 'United States',
+    flag: '🇺🇸',
+    city: 'New York, NY',
+    address: '79 Madison Ave, Manhattan, New York, NY 10016',
+    phone: '+1 (800) 980-NEXO'
+  },
+  {
+    country: 'United Kingdom',
+    flag: '🇬🇧',
+    city: 'London',
+    address: '3rd Floor, 86-90 Paul Street, EC2A 4NE, London',
+    phone: '+44 20 7946 0912'
+  },
+  {
+    country: 'United Arab Emirates',
+    flag: '🇦🇪',
+    city: 'Dubai',
+    address: 'Meydan Grandstand, 6th Floor, Nad Al Sheba, Dubai',
+    phone: '+971 4 312 4500'
+  },
+  {
+    country: 'Canada',
+    flag: '🇨🇦',
+    city: 'Calgary',
+    address: 'Suite 3810, Bankers Hall West, 888 3rd St, Calgary',
+    phone: '+1 403 555 0199'
+  },
+  {
+    country: 'India',
+    flag: '🇮🇳',
+    city: 'Noida & Bangalore',
+    address: 'Tech Innovation Hub, Special Economic Zone, Sector 62',
+    phone: '+91 120 456 7890'
+  },
+  {
+    country: 'Australia',
+    flag: '🇦🇺',
+    city: 'Sydney',
+    address: 'Level 24, International Towers, Barangaroo, Sydney',
+    phone: '+61 2 9000 1234'
+  }
+];
+---
+
+<footer class="bg-[#05070a] border-t border-white/10 text-gray-400 text-sm relative overflow-hidden">
+  
+  {/* Top Section: Brand & Global Locations */}
+  <div class="border-b border-white/10 py-16">
+    <div class="layout-container-lg">
+      
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 mb-12">
+        <div class="flex flex-col">
+          <a href="/" class="flex items-center gap-3 group">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-nexora-blue to-blue-400 p-0.5 shadow-glow-blue">
+              <div class="w-full h-full bg-black rounded-[10px] flex items-center justify-center">
+                <span class="font-extrabold text-lg text-white">N</span>
+              </div>
+            </div>
+            <span class="text-2xl font-bold tracking-tight text-white">
+              NEXORA<span class="text-nexora-blue">.</span>
+            </span>
+          </a>
+          <p class="text-xs sm:text-sm text-gray-400 mt-2 max-w-md font-normal">
+            Global Digital Product Engineering & Strategic Technology Consulting. Transforming enterprises across 35+ countries.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button 
+            onclick="window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { source: 'footer-cta' } }))"
+            class="btn-primary-blue swap-text-button text-xs font-bold px-7 py-3.5 group cursor-pointer"
+          >
+            <span class="flex items-center gap-2">
+              <span>Start a Project</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Global Locations Grid */}
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {offices.map((office) => (
+          <div class="p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-white/15 transition-all">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-lg">{office.flag}</span>
+              <span class="text-xs font-bold text-white">{office.country}</span>
+            </div>
+            <div class="text-xs font-semibold text-nexora-blue mb-1">{office.city}</div>
+            <p class="text-[11px] text-gray-400 line-clamp-2 leading-relaxed mb-2">
+              {office.address}
+            </p>
+            <div class="text-[10px] font-mono text-gray-400">
+              {office.phone}
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+
+  {/* Middle Section: Navigation Columns */}
+  <div class="py-16">
+    <div class="layout-container-lg">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
+        
+        {/* Col 1 */}
+        <div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            Services
+          </div>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#services" class="hover:text-white transition-colors">Product Engineering</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Custom Software Development</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Mobile App Development</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Legacy App Modernization</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Cloud Consulting & DevOps</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Zero-Trust Cybersecurity</a></li>
+          </ul>
+        </div>
+
+        {/* Col 2 */}
+        <div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            NexoraAI Hub
+          </div>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#services" class="hover:text-white transition-colors">Generative AI & LLMs</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Autonomous Multi-Agents</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Enterprise Agentic RAG</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Computer Vision & OCR</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">Domain Model Fine-Tuning</a></li>
+            <li><a href="#services" class="hover:text-white transition-colors">AI Governance & Safety</a></li>
+          </ul>
+        </div>
+
+        {/* Col 3 */}
+        <div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            Industries
+          </div>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#case-studies" class="hover:text-white transition-colors">FinTech & Digital Banking</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">Healthcare & MedTech</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">eCommerce & Retail</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">Aviation & Smart Travel</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">Automotive & Telemetry</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">EdTech & Education</a></li>
+          </ul>
+        </div>
+
+        {/* Col 4 */}
+        <div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            Why Nexora
+          </div>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#awards" class="hover:text-white transition-colors">Global Awards & Honors</a></li>
+            <li><a href="#case-studies" class="hover:text-white transition-colors">Enterprise Case Studies</a></li>
+            <li><a href="#testimonials" class="hover:text-white transition-colors">Client Testimonials</a></li>
+            <li><a href="#compliance" class="hover:text-white transition-colors">Compliance & Governance</a></li>
+            <li><a href="#tech" class="hover:text-white transition-colors">Tech Capabilities Matrix</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+
+        {/* Col 5: Accreditations */}
+        <div>
+          <div class="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            Recognitions
+          </div>
+          <div class="space-y-3">
+            <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-xs font-bold text-nexora-yellow">The Economic Times</div>
+              <div class="text-[11px] text-gray-300">Leader in AI-First Product Engineering 2026</div>
+            </div>
+            <div class="p-3 rounded-xl bg-white/[0.03] border border-white/5">
+              <div class="text-xs font-bold text-emerald-400">Deloitte Fast 50</div>
+              <div class="text-[11px] text-gray-300">Consecutive Winner (2024-2025)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {/* Bottom Legal & Copyright Bar */}
+  <div class="border-t border-white/10 py-8 bg-black">
+    <div class="layout-container-lg flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+      <div>
+        © 2026 NEXORA Technologies Inc. All rights reserved.
+      </div>
+      
+      <div class="flex items-center gap-6 text-gray-400">
+        <a href="#compliance" class="hover:text-white transition-colors">Privacy Policy</a>
+        <a href="#compliance" class="hover:text-white transition-colors">Terms of Service</a>
+        <a href="#compliance" class="hover:text-white transition-colors">SOC 2 Trust Portal</a>
+        <a href="#compliance" class="hover:text-white transition-colors">Security & Whistleblower</a>
+      </div>
+    </div>
+  </div>
+
+</footer>
