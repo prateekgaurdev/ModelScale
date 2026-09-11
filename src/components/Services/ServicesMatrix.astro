@@ -1,8 +1,6 @@
 ---
-// ServicesMatrix.astro — diagonal staircase grid matching appinventiv.com
-// Each row (4 rows × 4 columns) has ONE real card at the diagonal position.
-// Empty display-block spacers fill the rest.
-// Section uses LIGHT background, cards are white.
+// ServicesMatrix.astro — Standard horizontal 4-column grid (same level)
+// Cards fade-up stagger on scroll.
 
 const services = [
   {
@@ -52,66 +50,50 @@ const services = [
     </div>
 
     <!-- ============================================
-         DIAGONAL STAIRCASE GRID
-         4 rows, 4 columns. ONE card per row at
-         the diagonal column position.
+         SAME-LEVEL GRID (1 row, 4 columns)
          ============================================ -->
-    <div class="services-grid">
+    <div class="services-grid-horizontal">
+      {services.map((svc, idx) => (
+        <div class="service-card-hz">
+          
+          <!-- Icon -->
+          <div class="service-icon-wrap">
+            <img
+              src={svc.icon}
+              alt={svc.title}
+              class="service-icon-img"
+              onerror="this.style.display='none'"
+            />
+          </div>
 
-      {services.map((svc, rowIdx) => (
-        <!-- Each row: 4 columns, only col[rowIdx] is a real card -->
-        <div class="services-row">
-          {[0, 1, 2, 3].map((colIdx) => (
-            colIdx === rowIdx ? (
-              <!-- REAL CARD -->
-              <div class={`service-card reveal reveal-scale delay-${rowIdx + 1}`}>
-                <div class="service-card-inner">
+          <!-- Content -->
+          <div class="service-content">
+            <span class="eyebrow text-gray-500 mb-2 block">{svc.num}</span>
+            <h3 class="service-title">{svc.title}</h3>
+            <p class="service-desc">{svc.desc}</p>
+          </div>
 
-                  <!-- Icon -->
-                  <div class="service-icon-wrap">
-                    <img
-                      src={svc.icon}
-                      alt={svc.title}
-                      class="service-icon-img"
-                      onerror="this.style.display='none'"
-                    />
-                  </div>
+          <!-- CTA -->
+          <div class="service-cta-wrap">
+            <a
+              href={svc.href}
+              class="swap-text-button transparent-wht-btn service-btn"
+            >
+              <span class="text-original">
+                <span class="blk-text">{svc.cta}</span>
+              </span>
+              <span class="text-hover">
+                <span class="blk-text">{svc.cta}</span>
+              </span>
+            </a>
+          </div>
 
-                  <!-- Content -->
-                  <div class="service-content">
-                    <h3 class="service-title">{svc.title}</h3>
-                    <p class="service-desc">{svc.desc}</p>
-                  </div>
-
-                  <!-- CTA -->
-                  <div class="service-cta-wrap">
-                    <a
-                      href={svc.href}
-                      class="swap-text-button transparent-wht-btn service-btn"
-                    >
-                      <span class="text-original">
-                        <span class="blk-text">{svc.cta}</span>
-                      </span>
-                      <span class="text-hover">
-                        <span class="blk-text">{svc.cta}</span>
-                      </span>
-                    </a>
-                  </div>
-
-                </div>
-              </div>
-            ) : (
-              <!-- EMPTY SPACER -->
-              <div class="service-card service-card--empty"></div>
-            )
-          ))}
         </div>
       ))}
-
     </div>
 
     <!-- View All Services -->
-    <div class="services-view-all reveal">
+    <div class="services-view-all">
       <a href="#ai-suite" class="swap-text-button btn-view-all">
         <span class="text-original"><span>View All Services</span></span>
         <span class="text-hover"><span>View All Services</span></span>
@@ -132,7 +114,8 @@ const services = [
 <style>
   /* =============================================
      SERVICES SECTION — Light background
-     Exactly matching appinventiv.com
+     Exactly matching appinventiv.com styling, 
+     but presented on the same level (horizontal).
      ============================================= */
   .services-section {
     background: #f8f7f4;
@@ -142,7 +125,7 @@ const services = [
 
   .services-header {
     text-align: center;
-    margin-bottom: clamp(2rem, 4vw, 4rem);
+    margin-bottom: clamp(2.5rem, 5vw, 5rem);
   }
 
   .services-heading {
@@ -156,56 +139,29 @@ const services = [
     display: block;
   }
 
-  /* ---- Diagonal Grid ---- */
-  .services-grid {
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid #e8e8e4;
-    border-radius: 16px;
-    overflow: hidden;
-  }
-
-  .services-row {
+  /* ---- Horizontal Grid ---- */
+  .services-grid-horizontal {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid #e8e8e4;
-  }
-  .services-row:last-child {
-    border-bottom: none;
+    gap: 1.5rem;
   }
 
-  /* Individual cells */
-  .service-card {
-    padding: 0;
-    border-right: 1px solid #e8e8e4;
-    min-height: 280px;
-  }
-  .service-card:last-child {
-    border-right: none;
-  }
-
-  /* Empty spacer cells — subtle cross-hatch */
-  .service-card--empty {
-    background: #f8f7f4;
-    background-image:
-      linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
-    background-size: 32px 32px;
-  }
-
-  /* Real card cell */
-  .service-card:not(.service-card--empty) {
+  /* Individual cards */
+  .service-card-hz {
     background: #fff;
-  }
-
-  .service-card-inner {
+    border: 1px solid #e8e8e4;
+    border-radius: 1.25rem;
+    padding: clamp(1.75rem, 2vw, 2.25rem);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    padding: clamp(1.75rem, 2.5vw, 2.5rem);
-    gap: 2rem;
+    gap: 1.75rem;
+    min-height: 420px;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  }
+  
+  .service-card-hz:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
   }
 
   /* Icon */
@@ -240,7 +196,7 @@ const services = [
   }
 
   .service-desc {
-    font-size: 0.9rem;
+    font-size: 0.9375rem;
     font-weight: 400;
     line-height: 1.65;
     color: #555;
@@ -259,13 +215,15 @@ const services = [
     border-radius: 8px !important;
     background: transparent;
     display: inline-flex;
+    width: 100%;
+    justify-content: center;
   }
 
   /* View All Services button */
   .services-view-all {
     display: flex;
     justify-content: center;
-    margin-top: 2.5rem;
+    margin-top: 3.5rem;
   }
 
   .btn-view-all {
@@ -285,23 +243,20 @@ const services = [
   }
 
   /* ---- Responsive ---- */
-  @media (max-width: 900px) {
-    .services-grid {
-      grid-template-rows: none;
-      display: flex;
-      flex-direction: column;
+  @media (max-width: 1024px) {
+    .services-grid-horizontal {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
     }
-    .services-row {
+    .service-card-hz {
+      min-height: auto;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .services-grid-horizontal {
       grid-template-columns: 1fr;
     }
-    .service-card--empty { display: none; }
-    .service-card:not(.service-card--empty) {
-      border-right: none;
-      border-bottom: 1px solid #e8e8e4;
-    }
-    .services-row:last-child .service-card:not(.service-card--empty) {
-      border-bottom: none;
-    }
-    .service-card { min-height: auto; }
   }
 </style>
+

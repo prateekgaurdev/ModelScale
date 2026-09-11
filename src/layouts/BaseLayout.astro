@@ -204,30 +204,61 @@ const {
         });
       }
 
-      // ── 4. Services — stagger reveal (replaces broken pin animation) ─
-      // Each service card fades + slides up when it enters viewport.
-      // More reliable than ScrollTrigger.pin() with Lenis.
+      // ── 4. Services — Pinned Sequential Reveal ───────────────────────
       function initServicesReveal() {
-        const cards = document.querySelectorAll(".service-card:not(.service-card--empty)");
-        if (!cards.length) return;
+        const section = document.querySelector(".services-section");
+        const cards = document.querySelectorAll(".service-card-hz");
+        const btn = document.querySelector(".services-view-all");
+        
+        if (!section || !cards.length) return;
 
-        cards.forEach((card, i) => {
-          gsap.fromTo(card,
-            { y: 60, opacity: 0 },
-            {
-              y: 0, opacity: 1,
-              duration: 0.65,
-              ease: "power3.out",
-              delay: i * 0.12,
-              scrollTrigger: {
-                trigger: card,
-                start: "top 88%",
-                once: true,
-                scroller: window,
-              },
-            }
-          );
+        // Mobile: normal scroll trigger
+        if (window.innerWidth <= 1023) {
+          cards.forEach((card, i) => {
+            gsap.fromTo(card,
+              { y: 40, opacity: 0 },
+              {
+                y: 0, opacity: 1, duration: 0.65, ease: "power3.out",
+                scrollTrigger: { trigger: card, start: "top 85%", once: true }
+              }
+            );
+          });
+          return;
+        }
+
+        // Desktop: Pin and scrub reveal
+        gsap.set(cards, { opacity: 0, y: 50 });
+        if (btn) gsap.set(btn, { opacity: 0, y: 20 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 12%", // Pin when the section header is near the top
+            end: "+=120%",    // Scroll distance to keep pinned
+            pin: true,
+            scrub: 1,         // Smooth scrubbing
+            anticipatePin: 1
+          }
         });
+
+        // Stagger the cards sliding up and fading in based on scroll progress
+        cards.forEach((card, i) => {
+          tl.to(card, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: "power2.out"
+          }, i * 0.4); // Overlap the animations slightly
+        });
+
+        if (btn) {
+          tl.to(btn, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out"
+          }, "-=0.2");
+        }
       }
 
       // ── 5. Mouse followers ────────────────────────────────────────────
