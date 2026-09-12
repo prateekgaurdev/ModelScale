@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/Hero/HeroSection.astro';
+import StatsMarquee from '../components/StatsMarquee/StatsMarquee.astro';
 import AIServicesSplitScroll from '../components/Services/AIServicesSplitScroll.tsx';
 import ServicesMatrix from '../components/Services/ServicesMatrix.astro';
 import PortfolioSlider from '../components/Portfolio/PortfolioSlider.tsx';
@@ -17,6 +18,9 @@ import FAQAccordion from '../components/FAQ/FAQAccordion.tsx';
 <BaseLayout>
   <!-- Hero: two-column, video bg, awards carousel bottom-right -->
   <HeroSection />
+
+  <!-- Stats Marquee -->
+  <StatsMarquee />
 
   <!-- Diagonal staircase services grid (light bg) -->
   <ServicesMatrix />

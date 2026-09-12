@@ -12,7 +12,7 @@
        ============================================ -->
   <div class="hero-video-wrapper">
     <video
-      class="hero-video"
+      class="hero-video hero-video-anim"
       autoplay
       muted
       loop
@@ -176,6 +176,16 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    transform: scale(1.15); /* Initial scale for zoom out effect */
+  }
+
+  .hero-video-anim {
+    animation: heroZoomOut 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes heroZoomOut {
+    0% { transform: scale(1.25); filter: blur(4px); }
+    100% { transform: scale(1.15); filter: blur(0); }
   }
 
   /* --- Overlays --- */

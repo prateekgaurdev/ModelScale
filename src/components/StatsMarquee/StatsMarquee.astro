@@ -1,0 +1,33 @@
+---
+// StatsMarquee.astro — Infinite horizontal scrolling stats
+---
+<section class="py-12 bg-black border-t border-white/[0.06] overflow-hidden">
+  <div class="marquee-mask overflow-hidden">
+    <div class="flex gap-8 lg:gap-16 animate-marquee-fast whitespace-nowrap items-center w-max">
+      {[
+        { val: "10+", label: "YEARS OF EXPERIENCE" },
+        { val: "1700+", label: "TECH SPECIALISTS" },
+        { val: "3000+", label: "SOLUTIONS DELIVERED" },
+        { val: "150+", label: "AI MODELS DEPLOYED" },
+        { val: "35+", label: "INDUSTRIES SERVED" },
+        { val: "15+", label: "GLOBAL AWARDS" },
+        // Duplicate for seamless loop
+        { val: "10+", label: "YEARS OF EXPERIENCE" },
+        { val: "1700+", label: "TECH SPECIALISTS" },
+        { val: "3000+", label: "SOLUTIONS DELIVERED" },
+        { val: "150+", label: "AI MODELS DEPLOYED" },
+        { val: "35+", label: "INDUSTRIES SERVED" },
+        { val: "15+", label: "GLOBAL AWARDS" },
+      ].map(({ val, label }) => (
+        <div class="flex items-center gap-4 px-4 hover:scale-105 transition-transform duration-300">
+          <span class="text-4xl sm:text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 font-condensed tracking-tighter drop-shadow-2xl">
+            {val}
+          </span>
+          <span class="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-[0.2em] max-w-[140px] whitespace-normal leading-snug">
+            {label}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ArrowUpRight, Menu, X, BrainCircuit, Code2, Cloud, ShieldCheck, BookOpen, Sparkles } from 'lucide-react';
+import PromoStripe from './PromoStripe';
 
 const navItems = [
   { id: 'inventivai', label: 'NexoraAI' },
@@ -61,14 +62,18 @@ export default function Navbar() {
   };
 
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-[100] transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#05060a] border-b border-white/[0.08] py-3 shadow-[0_4px_40px_rgba(0,0,0,0.8)]'
-          : 'bg-[#05060a]/85 backdrop-blur-xl border-b border-white/[0.05] py-4'
-      }`}
-    >
-      <div className="container-xl flex items-center justify-between gap-4">
+    <>
+      <div className={`fixed top-0 inset-x-0 z-[101] transition-transform duration-300 ${scrolled ? '-translate-y-full' : 'translate-y-0'}`}>
+        <PromoStripe />
+      </div>
+      <header
+        className={`fixed inset-x-0 z-[100] transition-all duration-300 ${
+          scrolled
+            ? 'top-0 bg-[#05060a] border-b border-white/[0.08] py-3 shadow-[0_4px_40px_rgba(0,0,0,0.8)]'
+            : 'top-[36px] bg-[#05060a]/85 backdrop-blur-xl border-b border-white/[0.05] py-4'
+        }`}
+      >
+        <div className="container-xl flex items-center justify-between gap-4">
 
         {/* ---- Logo ---- */}
         <a href="/" className="flex items-center gap-2.5 shrink-0 group">
@@ -345,6 +350,7 @@ export default function Navbar() {
       )}
 
     </header>
+    </>
   );
 }
 

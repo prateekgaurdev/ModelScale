@@ -315,12 +315,50 @@ const {
         }
       }
 
+      // ── 6. Parallax Effects ───────────────────────────────────────────
+      function initParallax() {
+        const heroVideo = document.querySelector(".hero-video-wrapper");
+        if (heroVideo) {
+          gsap.to(heroVideo, {
+            yPercent: 20, // Parallax move down
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".nexora-hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+              scroller: window
+            }
+          });
+        }
+        
+        // Also subtle parallax on the portfolio images
+        const portImages = document.querySelectorAll(".port-card-img");
+        portImages.forEach((img) => {
+          gsap.fromTo(img, 
+            { yPercent: -10 },
+            { 
+              yPercent: 10,
+              ease: "none",
+              scrollTrigger: {
+                trigger: img.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+                scroller: window
+              }
+            }
+          );
+        });
+      }
+
       // ── Run all ───────────────────────────────────────────────────────
       function runAll() {
         initReveal();
         initLineAnimations();
         initServicesReveal();
         initMouseFollowers();
+        initParallax();
         // Final refresh after everything is set up
         setTimeout(() => ScrollTrigger.refresh(), 400);
       }
