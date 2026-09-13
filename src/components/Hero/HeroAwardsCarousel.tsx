@@ -50,7 +50,7 @@ export default function HeroAwardsCarousel() {
       <div className="relative p-5 rounded-2xl bg-gradient-to-r from-white/[0.07] to-white/[0.02] border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden group">
         
         {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-nexora-blue/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-32 h-32 bg-modelscale-blue/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -67,7 +67,7 @@ export default function HeroAwardsCarousel() {
             
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-nexora-yellow uppercase tracking-wider">
+                <span className="text-xs font-bold text-modelscale-yellow uppercase tracking-wider">
                   {awards[currentIndex].source}
                 </span>
                 <span className="text-[10px] text-gray-400 font-mono px-1.5 py-0.5 rounded bg-white/10">
@@ -106,7 +106,7 @@ export default function HeroAwardsCarousel() {
               key={i}
               onClick={() => setCurrentIndex(i)}
               className={`h-1 rounded-full transition-all duration-300 ${
-                i === currentIndex ? 'w-8 bg-nexora-blue' : 'w-2 bg-white/20 hover:bg-white/40'
+                i === currentIndex ? 'w-8 bg-modelscale-blue' : 'w-2 bg-white/20 hover:bg-white/40'
               }`}
               aria-label={`Go to slide ${i + 1}`}
             />

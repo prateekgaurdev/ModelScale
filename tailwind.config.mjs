@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        nexora: {
+        modelscale: {
           blue: {
             DEFAULT: '#1163FB',
             hover: '#0c4fcb',

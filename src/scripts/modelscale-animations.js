@@ -1,5 +1,5 @@
 /**
- * nexora-animations.js
+ * modelscale-animations.js
  * Master animation engine — Lenis smooth scroll + GSAP ScrollTrigger
  * Matches appinventiv.com's home-desktop.js animation patterns.
  * Injected as a <script type="module"> in BaseLayout.astro

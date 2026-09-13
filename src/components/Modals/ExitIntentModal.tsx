@@ -10,10 +10,10 @@ export default function ExitIntentModal() {
   useEffect(() => {
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 15) {
-        const hasTriggered = sessionStorage.getItem('nexora_exit_shown');
+        const hasTriggered = sessionStorage.getItem('modelscale_exit_shown');
         if (!hasTriggered) {
           setShowExitModal(true);
-          sessionStorage.setItem('nexora_exit_shown', 'true');
+          sessionStorage.setItem('modelscale_exit_shown', 'true');
         }
       }
     };
@@ -76,7 +76,7 @@ export default function ExitIntentModal() {
             ) : (
               <div>
                 
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-[11px] font-bold text-nexora-yellow uppercase tracking-wider mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20 text-[11px] font-bold text-modelscale-yellow uppercase tracking-wider mb-4">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Before You Go</span>
                 </div>
@@ -92,9 +92,9 @@ export default function ExitIntentModal() {
                 {/* Rating & Trust strip */}
                 <div className="p-4 rounded-xl bg-black/60 border border-white/10 mb-6 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="flex text-nexora-yellow">
+                    <div className="flex text-modelscale-yellow">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-nexora-yellow text-nexora-yellow" />
+                        <Star key={i} className="w-3.5 h-3.5 fill-modelscale-yellow text-modelscale-yellow" />
                       ))}
                     </div>
                     <span className="text-xs font-bold text-white">4.9 / 5.0 on Clutch</span>
@@ -113,11 +113,11 @@ export default function ExitIntentModal() {
                       placeholder="Enter your work email..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="flex-1 px-4 py-3.5 rounded-xl bg-black/80 border border-white/15 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                      className="flex-1 px-4 py-3.5 rounded-xl bg-black/80 border border-white/15 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                     />
                     <button
                       type="submit"
-                      className="py-3.5 px-6 rounded-xl bg-nexora-blue hover:bg-nexora-blue-hover text-white text-sm font-bold flex items-center justify-center gap-1.5 shadow-glow-blue cursor-pointer shrink-0"
+                      className="py-3.5 px-6 rounded-xl bg-modelscale-blue hover:bg-modelscale-blue-hover text-white text-sm font-bold flex items-center justify-center gap-1.5 shadow-glow-blue cursor-pointer shrink-0"
                     >
                       <span>Get Free Blueprint</span>
                       <ArrowUpRight className="w-4 h-4" />

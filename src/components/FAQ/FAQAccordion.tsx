@@ -5,12 +5,12 @@ import { ChevronDown, Plus, Minus, HelpCircle, ArrowUpRight, MessageSquareCode }
 const faqs = [
   {
     num: '01',
-    question: 'What types of digital products and engineering services does Nexora offer?',
-    answer: 'Nexora provides end-to-end digital transformation and product engineering services. This spans Custom Cloud-Native Software Development, Mobile App Ecosystems (iOS, Android, React Native, Flutter), Autonomous AI Agents & Generative AI Systems, Enterprise Modernization, Cloud Infrastructure (AWS, Azure, GCP), and Zero-Trust Cybersecurity.'
+    question: 'What types of digital products and engineering services does ModelScale offer?',
+    answer: 'ModelScale provides end-to-end digital transformation and product engineering services. This spans Custom Cloud-Native Software Development, Mobile App Ecosystems (iOS, Android, React Native, Flutter), Autonomous AI Agents & Generative AI Systems, Enterprise Modernization, Cloud Infrastructure (AWS, Azure, GCP), and Zero-Trust Cybersecurity.'
   },
   {
     num: '02',
-    question: 'How does Nexora guarantee intellectual property (IP) and data confidentiality?',
+    question: 'How does ModelScale guarantee intellectual property (IP) and data confidentiality?',
     answer: 'We sign bilateral Non-Disclosure Agreements (NDAs) prior to any technical briefing. 100% of the intellectual property, source code, design files, neural network weights, and documentation generated belong exclusively to you. All development occurs in air-gapped or role-permissioned sandboxes.'
   },
   {
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     num: '04',
-    question: 'How quickly can Nexora mobilize a dedicated engineering team?',
+    question: 'How quickly can ModelScale mobilize a dedicated engineering team?',
     answer: 'For standard technology stacks (React, Node.js, Python, AWS, Swift, Kotlin), we can deploy a dedicated engineering pod in 1 to 2 weeks. For highly specialized deep-tech, custom AI model training, or regulated niche requirements, typical onboarding is 2 to 3 weeks including environment provisioning and compliance alignment.'
   },
   {
@@ -46,13 +46,13 @@ export default function FAQAccordion() {
     <section id="faq" className="py-24 bg-black relative border-t border-white/10 overflow-hidden">
       
       {/* Background Glow */}
-      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-nexora-blue/10 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-modelscale-blue/10 blur-[160px] rounded-full pointer-events-none" />
 
       <div className="layout-container-lg relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-nexora-blue uppercase tracking-wider mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-modelscale-blue uppercase tracking-wider mb-4">
             <HelpCircle className="w-3.5 h-3.5" />
             <span>Got Questions?</span>
           </div>
@@ -69,7 +69,7 @@ export default function FAQAccordion() {
           {/* Left Sticky Box: Direct Help / Contact */}
           <div className="lg:col-span-4 lg:sticky lg:top-28">
             <div className="p-8 rounded-3xl bg-[#0e121a] border border-white/10 shadow-2xl backdrop-blur-xl">
-              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 p-2.5 flex items-center justify-center text-nexora-blue mb-6">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 p-2.5 flex items-center justify-center text-modelscale-blue mb-6">
                 <MessageSquareCode className="w-6 h-6" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">
@@ -81,7 +81,7 @@ export default function FAQAccordion() {
               
               <button 
                 onClick={() => window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { source: 'faq-help-card' } }))}
-                className="w-full py-3.5 px-4 rounded-xl bg-nexora-blue hover:bg-nexora-blue-hover text-white text-sm font-bold flex items-center justify-center gap-2 shadow-glow-blue transition-all cursor-pointer"
+                className="w-full py-3.5 px-4 rounded-xl bg-modelscale-blue hover:bg-modelscale-blue-hover text-white text-sm font-bold flex items-center justify-center gap-2 shadow-glow-blue transition-all cursor-pointer"
               >
                 <span>Ask an Architect Directly</span>
                 <ArrowUpRight className="w-4 h-4" />
@@ -103,7 +103,7 @@ export default function FAQAccordion() {
                   key={idx}
                   className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
                     isOpen 
-                      ? 'bg-[#0f131c] border-nexora-blue/50 shadow-glow-blue/10' 
+                      ? 'bg-[#0f131c] border-modelscale-blue/50 shadow-glow-blue/10' 
                       : 'bg-[#0a0c10] border-white/10 hover:border-white/20'
                   }`}
                 >
@@ -113,7 +113,7 @@ export default function FAQAccordion() {
                     aria-expanded={isOpen}
                   >
                     <div className="flex items-center gap-4">
-                      <span className="text-xs font-mono font-bold text-nexora-blue px-2.5 py-1 rounded bg-blue-500/10 shrink-0">
+                      <span className="text-xs font-mono font-bold text-modelscale-blue px-2.5 py-1 rounded bg-blue-500/10 shrink-0">
                         [ {faq.num} ]
                       </span>
                       <h3 className="text-base sm:text-lg font-bold text-white">
@@ -122,7 +122,7 @@ export default function FAQAccordion() {
                     </div>
 
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
-                      isOpen ? 'bg-nexora-blue text-white' : 'bg-white/5 text-gray-400'
+                      isOpen ? 'bg-modelscale-blue text-white' : 'bg-white/5 text-gray-400'
                     }`}>
                       {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     </div>

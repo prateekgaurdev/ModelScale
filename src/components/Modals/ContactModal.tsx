@@ -123,7 +123,7 @@ export default function ContactModal() {
                 
                 {/* Header */}
                 <div className="mb-8 pr-8">
-                  <div className="inline-flex items-center gap-2 text-xs font-bold text-nexora-blue uppercase tracking-wider mb-2">
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-modelscale-blue uppercase tracking-wider mb-2">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Let’s Build Something Remarkable</span>
                   </div>
@@ -152,7 +152,7 @@ export default function ContactModal() {
                           placeholder="Alex Morgan"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -169,7 +169,7 @@ export default function ContactModal() {
                           placeholder="alex@company.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -188,7 +188,7 @@ export default function ContactModal() {
                           placeholder="Acme Corp / Startup"
                           value={formData.company}
                           onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -204,7 +204,7 @@ export default function ContactModal() {
                           placeholder="+1 (555) 000-0000"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                          className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                         />
                       </div>
                     </div>
@@ -225,7 +225,7 @@ export default function ContactModal() {
                             onClick={() => toggleService(srv)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
                               isSelected
-                                ? 'bg-nexora-blue text-white border-nexora-blue'
+                                ? 'bg-modelscale-blue text-white border-modelscale-blue'
                                 : 'bg-black/50 text-gray-400 border-white/10 hover:border-white/20'
                             }`}
                           >
@@ -249,7 +249,7 @@ export default function ContactModal() {
                           onClick={() => setFormData({ ...formData, budget: b })}
                           className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-semibold transition-all border ${
                             formData.budget === b
-                              ? 'bg-nexora-yellow text-black border-nexora-yellow font-bold'
+                              ? 'bg-modelscale-yellow text-black border-modelscale-yellow font-bold'
                               : 'bg-black/50 text-gray-400 border-white/10 hover:border-white/20'
                           }`}
                         >
@@ -269,7 +269,7 @@ export default function ContactModal() {
                       placeholder="Describe your vision, timeline, target platforms, or current architectural bottlenecks..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full p-3.5 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-nexora-blue focus:outline-none transition-colors"
+                      className="w-full p-3.5 rounded-xl bg-black/60 border border-white/10 text-white text-sm focus:border-modelscale-blue focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -280,7 +280,7 @@ export default function ContactModal() {
                       id="nda-check"
                       checked={formData.requireNda}
                       onChange={(e) => setFormData({ ...formData, requireNda: e.target.checked })}
-                      className="w-4 h-4 rounded bg-black border-white/20 text-nexora-blue focus:ring-0"
+                      className="w-4 h-4 rounded bg-black border-white/20 text-modelscale-blue focus:ring-0"
                     />
                     <label htmlFor="nda-check" className="text-xs text-gray-400 select-none cursor-pointer flex items-center gap-1.5">
                       <Shield className="w-3.5 h-3.5 text-emerald-400" />
@@ -291,7 +291,7 @@ export default function ContactModal() {
                   {/* Submit Button */}
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-nexora-blue hover:bg-nexora-blue-hover text-white font-bold text-sm flex items-center justify-center gap-2 shadow-glow-blue transition-all cursor-pointer"
+                    className="w-full py-4 rounded-xl bg-modelscale-blue hover:bg-modelscale-blue-hover text-white font-bold text-sm flex items-center justify-center gap-2 shadow-glow-blue transition-all cursor-pointer"
                   >
                     <span>Submit Discovery Request</span>
                     <Send className="w-4 h-4" />

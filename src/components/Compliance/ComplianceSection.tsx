@@ -106,7 +106,7 @@ export default function ComplianceAccordion() {
                 Risk in Mind
               </h2>
               <p className="compliance-subtitle">
-                At Nexora, we integrate compliance into every layer of our
+                At ModelScale, we integrate compliance into every layer of our
                 engineering process — from the first architecture decision to
                 the final production deployment.
               </p>

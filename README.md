@@ -1,6 +1,6 @@
-# NEXORA | Digital Product Engineering & Strategic AI Consulting
+# ModelScale | Digital Product Engineering & Strategic AI Consulting
 
-A high-performance, enterprise-grade digital product engineering and AI consulting website built with **Astro**, **React**, **Tailwind CSS**, and **GSAP**. Inspired by premium digital agency aesthetics (like Appinventiv), NEXORA features fluid animations, smooth scrolling, and an interactive, highly-optimized frontend.
+A high-performance, enterprise-grade digital product engineering and AI consulting website built with **Astro**, **React**, **Tailwind CSS**, and **GSAP**. Inspired by premium digital agency aesthetics (like Appinventiv), ModelScale features fluid animations, smooth scrolling, and an interactive, highly-optimized frontend.
 
 ## 🚀 Features
 
@@ -36,8 +36,8 @@ Ensure you have Node.js (v18+) and your preferred package manager installed. We 
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url> nexora-frontend
-   cd nexora-frontend
+   git clone <your-repo-url> modelscale-frontend
+   cd modelscale-frontend
    ```
 
 2. Install dependencies:
@@ -74,7 +74,7 @@ bun run preview
 ## 📂 Project Structure
 
 ```text
-nexora-frontend/
+modelscale-frontend/
 ├── public/
 │   └── assets/
 │       ├── images/        # High-res SVGs, WebP images, and partner logos
@@ -90,7 +90,7 @@ nexora-frontend/
 │   │   ├── Header/        # Navbar & Mega Menu (React Island)
 │   │   ├── Hero/          # Video Hero & Awards Carousel
 │   │   ├── Modals/        # Contact & Exit-Intent lead capture modals
-│   │   ├── NexoraAI/      # AI Spotlight features
+│   │   ├── ModelScale AI/      # AI Spotlight features
 │   │   ├── Portfolio/     # GSAP Draggable Case Studies Slider
 │   │   ├── Services/      # Diagonal Bento Grid & Split Scroll
 │   │   ├── TechExpertise/ # Hover-expand capabilities grid
@@ -102,7 +102,7 @@ nexora-frontend/
 │   ├── pages/
 │   │   └── index.astro        # Homepage entry point
 │   ├── scripts/
-│   │   └── nexora-animations.js # Master animation engine (Lenis + GSAP)
+│   │   └── modelscale-animations.js # Master animation engine (Lenis + GSAP)
 │   └── styles/
 │       └── global.css         # Tailwind directives, theme variables, and custom CSS
 ├── astro.config.mjs       # Astro configuration (React, Tailwind)
@@ -119,4 +119,4 @@ nexora-frontend/
 
 ## 📄 License
 
-This project is proprietary. All rights reserved by NEXORA.
+This project is proprietary. All rights reserved by ModelScale.

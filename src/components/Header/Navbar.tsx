@@ -3,7 +3,7 @@ import { ChevronDown, ArrowUpRight, Menu, X, BrainCircuit, Code2, Cloud, ShieldC
 import PromoStripe from './PromoStripe';
 
 const navItems = [
-  { id: 'inventivai', label: 'ModelScale AI' },
+  { id: 'inventivai', label: 'ModelScaleAI' },
   { id: 'about',     label: 'About'     },
   { id: 'services',  label: 'Services'  },
   { id: 'industries',label: 'Industries'},
@@ -120,7 +120,7 @@ export default function Navbar() {
                     }`} />
                   </button>
 
-                  {/* ---- ModelScale AI dropdown ---- */}
+                  {/* ---- ModelScaleAI dropdown ---- */}
                   {item.id === 'inventivai' && open === 'inventivai' && (
                     <DropdownWrapper>
                       <div className="grid grid-cols-[200px_1fr] gap-0 min-w-[820px]">
@@ -204,7 +204,7 @@ export default function Navbar() {
                     <DropdownWrapper cls="min-w-[220px]">
                       <div className="p-3 space-y-0.5">
                         {[
-                          ['About Nexora',      '#awards'],
+                          ['About ModelScale',      '#awards'],
                           ['Leadership Team',   '#awards'],
                           ['Client Portfolio',  '#case-studies'],
                           ['Testimonials',      '#testimonials'],
@@ -281,7 +281,7 @@ export default function Navbar() {
             href="#services"
             className="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 hidden 2xl:block"
           >
-            Explore Nexora Digital
+            Explore ModelScale Digital
           </a>
         </nav>
 
@@ -314,7 +314,7 @@ export default function Navbar() {
         <div className="xl:hidden fixed inset-x-0 top-full max-h-[80dvh] overflow-y-auto bg-[#060810]/98 border-b border-white/[0.07] backdrop-blur-2xl shadow-2xl">
           <div className="container-xl py-6 space-y-1">
             {[
-              ['ModelScale AI Suite', '#ai-suite'],
+              ['ModelScaleAI Suite', '#ai-suite'],
               ['About', '#awards'],
               ['Services', '#services'],
               ['Industries', '#case-studies'],
