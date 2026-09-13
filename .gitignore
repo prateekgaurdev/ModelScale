@@ -40,6 +40,7 @@ Thumbs.db
 logs
 *.log
 
-# Reference scrapes
-appinventiv.com/
-appinventiv.com (2)/
+
+# Local untracked user files
+Firefly.png
+Gemini_Generated_Image*.png

@@ -21,7 +21,7 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/assets/images/inventiv-ai-logo.svg" />
+    <link rel="icon" href="/assets/images/favicon.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
@@ -193,8 +193,6 @@ const {
                 trigger: el,
                 start: "top 85%",
                 once: true,
-                // IMPORTANT: tell ScrollTrigger to use Lenis scroll position
-                scroller: window,
               },
             }
           );
@@ -232,22 +230,22 @@ const {
           scrollTrigger: {
             trigger: section,
             start: "top 8%", // Pin when the section header is near the top
-            end: "+=150%",   // Slightly faster to scroll through
+            end: "+=120%",   // Generous scroll distance to keep pinned
             pin: true,
-            scrub: true,     // Direct 1:1 scrub (Lenis already provides the smoothing, no double-lag)
+            scrub: true,     // Direct 1:1 scrub
             anticipatePin: 1
           }
         });
 
-        // Stagger the cards sliding up and fading in based on scroll progress
         // First card starts immediately at the beginning of the pin (0)
+        // Subsequent cards come in one by one with very short delay
         cards.forEach((card, i) => {
           tl.to(card, {
             opacity: 1,
             y: 0,
             duration: 1,
             ease: "power2.out"
-          }, i * 0.75); // Spaced out so you have to scroll to see each next card
+          }, i * 0.2); // VERY short delay between each card (0.2s relative to scrub)
         });
 
         if (btn) {
@@ -317,22 +315,7 @@ const {
 
       // ── 6. Parallax Effects ───────────────────────────────────────────
       function initParallax() {
-        const heroVideo = document.querySelector(".hero-video-wrapper");
-        if (heroVideo) {
-          gsap.to(heroVideo, {
-            yPercent: 20, // Parallax move down
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".nexora-hero",
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-              scroller: window
-            }
-          });
-        }
-        
-        // Also subtle parallax on the portfolio images
+        // Just keep the portfolio image parallax, remove heavy video parallax
         const portImages = document.querySelectorAll(".port-card-img");
         portImages.forEach((img) => {
           gsap.fromTo(img, 
@@ -344,8 +327,7 @@ const {
                 trigger: img.parentElement,
                 start: "top bottom",
                 end: "bottom top",
-                scrub: true,
-                scroller: window
+                scrub: true
               }
             }
           );

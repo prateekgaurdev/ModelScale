@@ -3,7 +3,7 @@ import { ChevronDown, ArrowUpRight, Menu, X, BrainCircuit, Code2, Cloud, ShieldC
 import PromoStripe from './PromoStripe';
 
 const navItems = [
-  { id: 'inventivai', label: 'NexoraAI' },
+  { id: 'inventivai', label: 'ModelScale AI' },
   { id: 'about',     label: 'About'     },
   { id: 'services',  label: 'Services'  },
   { id: 'industries',label: 'Industries'},
@@ -77,13 +77,9 @@ export default function Navbar() {
 
         {/* ---- Logo ---- */}
         <a href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <svg width="30" height="30" viewBox="0 0 36 36" fill="none"
-            className="transition-transform duration-300 group-hover:scale-110">
-            <path d="M5 31L18 5L31 31H23L18 18.5L13 31H5Z" fill="#1163FB"/>
-            <path d="M13 31L18 18.5L23 31H13Z" fill="#5593FF" opacity="0.9"/>
-          </svg>
+          <img src="/assets/images/modelscale-logo.png" alt="ModelScale" className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110" />
           <span className="text-[1.35rem] font-bold tracking-tight text-white leading-none">
-            nexora
+            ModelScale
           </span>
         </a>
 
@@ -124,7 +120,7 @@ export default function Navbar() {
                     }`} />
                   </button>
 
-                  {/* ---- NexoraAI dropdown ---- */}
+                  {/* ---- ModelScale AI dropdown ---- */}
                   {item.id === 'inventivai' && open === 'inventivai' && (
                     <DropdownWrapper>
                       <div className="grid grid-cols-[200px_1fr] gap-0 min-w-[820px]">
@@ -318,7 +314,7 @@ export default function Navbar() {
         <div className="xl:hidden fixed inset-x-0 top-full max-h-[80dvh] overflow-y-auto bg-[#060810]/98 border-b border-white/[0.07] backdrop-blur-2xl shadow-2xl">
           <div className="container-xl py-6 space-y-1">
             {[
-              ['NexoraAI Suite', '#ai-suite'],
+              ['ModelScale AI Suite', '#ai-suite'],
               ['About', '#awards'],
               ['Services', '#services'],
               ['Industries', '#case-studies'],
