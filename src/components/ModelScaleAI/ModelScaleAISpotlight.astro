@@ -2,45 +2,45 @@
 import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, CircleCheck } from 'lucide-react';
 ---
 
-<section class="py-24 bg-[#07090e] relative border-t border-white/10 overflow-hidden">
+<section class="py-24 bg-[#F5F3EE] relative border-t border-[#E7E2D6] overflow-hidden">
   
   {/* Ambient Background Radial */}
-  <div class="absolute -top-40 right-10 w-[700px] h-[500px] bg-gradient-to-b from-blue-600/15 via-indigo-600/5 to-transparent blur-[160px] pointer-events-none rounded-full" />
-  <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-900/10 blur-[140px] pointer-events-none rounded-full" />
+  <div class="absolute -top-40 right-10 w-[700px] h-[500px] bg-gradient-to-b from-[#FF5B2E]/8 via-[#FF5B2E]/[0.02] to-transparent blur-[140px] pointer-events-none rounded-full" />
+  <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#E7E2D6]/40 blur-[120px] pointer-events-none rounded-full" />
 
   <div class="layout-container-lg relative z-10">
     
     {/* Section Eyebrow & Headline */}
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
       <div class="lg:col-span-7">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-bold text-modelscale-blue uppercase tracking-wider mb-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF5B2E]/10 border border-[#FF5B2E]/20 text-xs font-mono font-bold text-[#FF5B2E] uppercase tracking-wider mb-4">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Next-Gen Enterprise AI Engine</span>
         </div>
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold line-anim text-white tracking-tight leading-tight">
-          ModelScale <span class="text-modelscale-blue">AI</span>: <br />
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold line-anim text-[#0B0B0D] tracking-tight leading-tight">
+          ModelScale <span class="text-[#FF5B2E]">AI</span>: <br />
           Architecting Autonomous Intelligence for Industry.
         </h2>
-        <p class="mt-4 text-base sm:text-lg text-gray-300 font-normal leading-relaxed max-w-2xl">
+        <p class="mt-4 text-base sm:text-lg text-[#3A3A3F] font-normal leading-relaxed max-w-2xl">
           We move beyond generic chatbots. ModelScale engineers secure, domain-specific AI agents and high-throughput LLM pipelines that integrate directly with enterprise ERPs, CRMs, and core cloud telemetry.
         </p>
       </div>
 
       <div class="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-4 justify-end">
-        <div class="p-6 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl">
+        <div class="p-6 rounded-2xl bg-[#FDFCF9] border border-[#E7E2D6] shadow-[0_10px_30px_-10px_rgba(11,11,13,0.06)]">
           <div class="flex items-center gap-3 mb-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-            <span class="text-xs font-mono text-gray-300 uppercase tracking-wider font-semibold">Production Metrics</span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+            <span class="text-xs font-mono text-[#7A7A82] uppercase tracking-wider font-semibold">Production Metrics</span>
           </div>
-          <div class="text-3xl font-black text-white">99.4% Reasoning Accuracy</div>
-          <div class="text-xs text-gray-400 mt-1">Benchmarked on strict enterprise domain-specific compliance evaluations.</div>
+          <div class="text-3xl font-black text-[#0B0B0D]">99.4% Reasoning Accuracy</div>
+          <div class="text-xs text-[#7A7A82] mt-1">Benchmarked on strict enterprise domain-specific compliance evaluations.</div>
         </div>
 
         <button 
           onclick="window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { source: 'ai-spotlight-audit' } }))"
-          class="btn-primary-blue swap-text-button text-sm py-4 px-6 group cursor-pointer"
+          class="swap-text-button btn-primary-blue text-sm py-4 px-6 group cursor-pointer"
         >
-          <span class="flex items-center justify-center gap-2 font-bold">
+          <span class="flex items-center justify-center gap-2 font-semibold">
             <span>Schedule AI Architecture Audit</span>
             <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
@@ -52,28 +52,28 @@ import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       
       {/* Card 1: Autonomous Multi-Agent Systems */}
-      <div class="p-8 rounded-2xl bg-[#0e121a] border border-white/10 hover:border-modelscale-blue/50 transition-all duration-300 flex flex-col justify-between group">
+      <div class="p-8 rounded-2xl bg-[#FDFCF9] border border-[#E7E2D6] hover:border-[#FF5B2E]/40 transition-all duration-300 flex flex-col justify-between group shadow-[0_4px_20px_rgba(11,11,13,0.03)] hover:shadow-[0_20px_40px_-15px_rgba(11,11,13,0.08)] hover:-translate-y-1">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 p-2.5 flex items-center justify-center text-modelscale-blue mb-6 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-[#FF5B2E]/10 border border-[#FF5B2E]/20 p-2.5 flex items-center justify-center text-[#FF5B2E] mb-6 group-hover:scale-110 transition-transform">
             <Bot className="w-6 h-6" />
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-[#0B0B0D] mb-3">
             Autonomous Multi-Agent Networks
           </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6 font-normal">
+          <p class="text-sm text-[#7A7A82] leading-relaxed mb-6 font-normal">
             Orchestrate specialized AI agents capable of planning, executing complex SQL/API calls, self-correcting errors, and reporting structured outcomes.
           </p>
-          <ul class="space-y-2 text-xs text-gray-300">
+          <ul class="space-y-2.5 text-xs text-[#3A3A3F]">
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Hierarchical Supervisor & Worker Swarms</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Durable Workflow Execution & Failover</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Deterministic Guardrails & Sandbox Isolation</span>
             </li>
           </ul>
@@ -81,28 +81,28 @@ import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, 
       </div>
 
       {/* Card 2: Enterprise Zero-Trust RAG */}
-      <div class="p-8 rounded-2xl bg-[#0e121a] border border-white/10 hover:border-modelscale-blue/50 transition-all duration-300 flex flex-col justify-between group">
+      <div class="p-8 rounded-2xl bg-[#FDFCF9] border border-[#E7E2D6] hover:border-[#FF5B2E]/40 transition-all duration-300 flex flex-col justify-between group shadow-[0_4px_20px_rgba(11,11,13,0.03)] hover:shadow-[0_20px_40px_-15px_rgba(11,11,13,0.08)] hover:-translate-y-1">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 p-2.5 flex items-center justify-center text-modelscale-blue mb-6 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-[#FF5B2E]/10 border border-[#FF5B2E]/20 p-2.5 flex items-center justify-center text-[#FF5B2E] mb-6 group-hover:scale-110 transition-transform">
             <Database className="w-6 h-6" />
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-[#0B0B0D] mb-3">
             Enterprise Zero-Trust RAG
           </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6 font-normal">
+          <p class="text-sm text-[#7A7A82] leading-relaxed mb-6 font-normal">
             Connect petabyte-scale knowledge bases, vector search engines, and relational data with granular document-level permission controls.
           </p>
-          <ul class="space-y-2 text-xs text-gray-300">
+          <ul class="space-y-2.5 text-xs text-[#3A3A3F]">
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Hybrid Vector + Full-Text BM25 Retrieval</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Role-Based Access Control (RBAC) Filtering</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>Verifiable Source Attribution & Zero Hallucination</span>
             </li>
           </ul>
@@ -110,28 +110,28 @@ import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, 
       </div>
 
       {/* Card 3: Custom Models & On-Premise Privacy */}
-      <div class="p-8 rounded-2xl bg-[#0e121a] border border-white/10 hover:border-modelscale-blue/50 transition-all duration-300 flex flex-col justify-between group">
+      <div class="p-8 rounded-2xl bg-[#FDFCF9] border border-[#E7E2D6] hover:border-[#FF5B2E]/40 transition-all duration-300 flex flex-col justify-between group shadow-[0_4px_20px_rgba(11,11,13,0.03)] hover:shadow-[0_20px_40px_-15px_rgba(11,11,13,0.08)] hover:-translate-y-1">
         <div>
-          <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 p-2.5 flex items-center justify-center text-modelscale-blue mb-6 group-hover:scale-110 transition-transform">
+          <div class="w-12 h-12 rounded-xl bg-[#FF5B2E]/10 border border-[#FF5B2E]/20 p-2.5 flex items-center justify-center text-[#FF5B2E] mb-6 group-hover:scale-110 transition-transform">
             <ShieldCheck className="w-6 h-6" />
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">
+          <h3 class="text-xl font-bold text-[#0B0B0D] mb-3">
             Air-Gapped & Fine-Tuned Models
           </h3>
-          <p class="text-sm text-gray-400 leading-relaxed mb-6 font-normal">
+          <p class="text-sm text-[#7A7A82] leading-relaxed mb-6 font-normal">
             Train and deploy domain-adapted open-weight models (Llama 3, DeepSeek, Mistral) inside your private VPC with strict data residency.
           </p>
-          <ul class="space-y-2 text-xs text-gray-300">
+          <ul class="space-y-2.5 text-xs text-[#3A3A3F]">
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>LoRA & QLoRA Parameter-Efficient Tuning</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>HIPAA, GDPR & Financial PII Redaction</span>
             </li>
             <li class="flex items-center gap-2">
-              <CircleCheck className="w-3.5 h-3.5 text-modelscale-blue" />
+              <CircleCheck className="w-3.5 h-3.5 text-[#FF5B2E] shrink-0" />
               <span>High-Throughput vLLM / TensorRT Acceleration</span>
             </li>
           </ul>
@@ -141,12 +141,12 @@ import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, 
     </div>
 
     {/* Roadmap Technology Alignment Banner */}
-    <div class="mt-14 p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-blue-950/60 via-black to-[#0d121c] border border-blue-500/30 shadow-2xl relative overflow-hidden">
-      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-modelscale-blue/20 rounded-full blur-[100px] pointer-events-none" />
+    <div class="mt-14 p-8 sm:p-12 rounded-3xl bg-[#0B0B0D] border border-white/10 shadow-2xl relative overflow-hidden text-white">
+      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#FF5B2E]/15 rounded-full blur-[100px] pointer-events-none" />
       
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
         <div class="lg:col-span-8 text-left">
-          <span class="text-xs font-mono font-bold text-modelscale-yellow uppercase tracking-widest block mb-2">
+          <span class="text-xs font-mono font-bold text-[#FF5B2E] uppercase tracking-widest block mb-2">
             [ STRATEGIC TECHNOLOGY ALIGNMENT ]
           </span>
           <h3 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight">
@@ -160,7 +160,7 @@ import { Bot, BrainCircuit, Cpu, Sparkles, Database, ShieldCheck, ArrowUpRight, 
         <div class="lg:col-span-4 flex justify-start lg:justify-end">
           <button 
             onclick="window.dispatchEvent(new CustomEvent('open-contact-modal', { detail: { source: 'roadmap-banner-cta' } }))"
-            class="btn-primary-blue swap-text-button text-sm sm:text-base px-8 py-4 cursor-pointer group shadow-glow-blue"
+            class="swap-text-button btn-primary-blue text-sm sm:text-base px-8 py-4 cursor-pointer group shadow-[0_4px_20px_rgba(255,91,46,0.35)]"
           >
             <span class="flex items-center gap-2 font-bold">
               <span>Discuss Your Tech Strategy</span>

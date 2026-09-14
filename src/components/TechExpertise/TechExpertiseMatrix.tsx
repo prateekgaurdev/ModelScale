@@ -222,34 +222,34 @@ interface CarouselConfig {
 const getCarouselConfig = (width: number): CarouselConfig => {
   if (width < 640) {
     return {
-      distanceDivisor: 140,
+      distanceDivisor: 130,
       velocityDivisor: 500,
       sensitivity: 180,
-      xMultiplier: 110,
-      yMultiplier: 15,
-      rotationMultiplier: 6,
+      xMultiplier: 90,
+      yMultiplier: 10,
+      rotationMultiplier: 4,
       scaleReduction: 0.08,
     };
   }
   if (width < 1024) {
     return {
-      distanceDivisor: 180,
+      distanceDivisor: 170,
       velocityDivisor: 650,
       sensitivity: 220,
-      xMultiplier: 170,
-      yMultiplier: 25,
-      rotationMultiplier: 8,
-      scaleReduction: 0.1,
+      xMultiplier: 160,
+      yMultiplier: 16,
+      rotationMultiplier: 5.5,
+      scaleReduction: 0.09,
     };
   }
   return {
-    distanceDivisor: 220,
+    distanceDivisor: 210,
     velocityDivisor: 800,
-    sensitivity: 260,
-    xMultiplier: 230,
-    yMultiplier: 32,
-    rotationMultiplier: 10,
-    scaleReduction: 0.12,
+    sensitivity: 250,
+    xMultiplier: 220,
+    yMultiplier: 20,
+    rotationMultiplier: 6.5,
+    scaleReduction: 0.09,
   };
 };
 
@@ -490,13 +490,22 @@ const StackedTechCard = ({ item, index, total, progress, config }: StackedCardPr
     offset,
     (o) => 1 - Math.abs(o) * config.scaleReduction,
   );
+  // Front card (1.0) & immediate 2 side cards (0.88) are clear and sharp.
+  // The 2 cards behind them (0.28) are very faded in the background.
+  // All remaining cards (|offset| >= 2.2) are completely hidden (0).
   const opacity = useTransform(
     offset,
-    [-total / 2, -total / 2 + 0.5, 0, total / 2 - 0.5, total / 2],
-    [0, 1, 1, 1, 0],
+    [-2.5, -2.2, -2, -1, 0, 1, 2, 2.2, 2.5],
+    [0, 0, 0.28, 0.88, 1, 0.88, 0.28, 0, 0],
   );
   const zIndex = useTransform(offset, (o) =>
     Math.round(100 - Math.abs(o) * 10),
+  );
+
+  const dimOverlay = useTransform(
+    offset,
+    [-2, -1, 0, 1, 2],
+    [0.65, 0.12, 0, 0.12, 0.65],
   );
 
   return (
@@ -522,13 +531,7 @@ const StackedTechCard = ({ item, index, total, progress, config }: StackedCardPr
 
       {/* Dim overlay for non-active background cards */}
       <motion.div
-        style={{
-          opacity: useTransform(
-            offset,
-            [-2, -0.5, 0, 0.5, 2],
-            [0.55, 0.15, 0, 0.15, 0.55],
-          ),
-        }}
+        style={{ opacity: dimOverlay }}
         className="absolute inset-0 bg-black pointer-events-none z-10"
       />
 
