@@ -209,13 +209,12 @@ export default function Navbar() {
                     <DropdownWrapper cls="min-w-[220px]">
                       <div className="p-2.5 space-y-0.5">
                         {[
-                          ['About ModelScale',      '#awards'],
-                          ['Leadership Team',   '#awards'],
+                          ['About ModelScale',      '#services'],
+                          ['Leadership & Tech', '#tech'],
                           ['Client Portfolio',  '#case-studies'],
                           ['Testimonials',      '#testimonials'],
-                          ['Awards',            '#awards'],
-                          ['Compliance',        '#compliance'],
-                          ['Careers',           '#faq'],
+                          ['Compliance & Trust','#compliance'],
+                          ['Careers & FAQ',     '#faq'],
                         ].map(([label, href]) => (
                           <a key={label} href={href} className="block px-3 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] transition-all">
                             {label}
@@ -320,11 +319,11 @@ export default function Navbar() {
           <div className="container-xl py-6 space-y-1">
             {[
               ['ModelScaleAI Suite', '#ai-suite'],
-              ['About', '#awards'],
               ['Services', '#services'],
-              ['Industries', '#case-studies'],
+              ['Tech Capabilities', '#tech'],
               ['Portfolio', '#case-studies'],
-              ['Resources', '#faq'],
+              ['Pricing', '#pricing'],
+              ['Resources & FAQ', '#faq'],
             ].map(([label, href]) => (
               <a
                 key={label}

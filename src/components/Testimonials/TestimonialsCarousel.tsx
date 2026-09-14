@@ -26,10 +26,10 @@ const relPos = (item: number, cur: number, total: number) => {
 };
 
 export default function TestimonialsCarousel() {
-  const [cur, setCur]         = useState(0);
-  const [animating, setAnim]  = useState(false);
-  const refs  = useRef<(HTMLDivElement | null)[]>([]);
+  const [cur, setCur] = useState(0);
+  const refs = useRef<(HTMLDivElement | null)[]>([]);
   const curRef = useRef(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   useScrollReveal();
 
   // Set all items immediately (no animation)
@@ -39,60 +39,73 @@ export default function TestimonialsCarousel() {
       const r = relPos(i, ci, reviews.length);
       const c = POS[String(r)];
       const vis = r >= -1 && r <= 1;
-      el.style.visibility   = vis ? "visible" : "hidden";
-      el.style.display      = (r === -2 || r === 2) ? "none" : "";
-      el.style.zIndex       = r === 0 ? "10" : Math.abs(r) === 1 ? "5" : "1";
-      el.style.pointerEvents = r === 0 ? "auto" : "none";
-      gsap.set(el, { y: c.y, z: c.z, rotationX: c.rx, opacity: c.opacity,
-                     transformOrigin:"50% 50%", force3D: true });
+      el.style.visibility = vis ? "visible" : "hidden";
+      el.style.display = (r === -2 || r === 2) ? "none" : "";
+      el.style.zIndex = r === 0 ? "10" : Math.abs(r) === 1 ? "5" : "1";
+      el.style.pointerEvents = "auto";
+      gsap.set(el, {
+        y: c.y,
+        z: c.z,
+        rotationX: c.rx,
+        opacity: c.opacity,
+        transformOrigin: "50% 50%",
+        force3D: true,
+      });
     });
   };
 
-  // Animated transition
+  const resetTimer = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      animateTo((curRef.current + 1) % reviews.length);
+    }, 5000);
+  };
+
+  // Animated transition (supports rapid clicking without locking)
   const animateTo = (target: number) => {
-    if (animating || target === curRef.current) return;
-    setAnim(true);
+    if (target === curRef.current) return;
     setCur(target);
     curRef.current = target;
+    resetTimer();
 
     refs.current.forEach((el, i) => {
       if (!el) return;
-      const fromR = relPos(i, curRef.current === target ? target : cur, reviews.length);
-      const toR   = relPos(i, target, reviews.length);
-      const toC   = POS[String(toR)];
+      const toR = relPos(i, target, reviews.length);
+      const toC = POS[String(toR)];
 
       // Hide items that stay far out
       if (toR === -2 || toR === 2) {
-        gsap.set(el, { visibility: "hidden", opacity: 0 });
+        gsap.killTweensOf(el);
+        gsap.set(el, { visibility: "hidden", opacity: 0, display: "none" });
         return;
       }
 
       el.style.display = "";
       el.style.visibility = "visible";
       el.style.zIndex = toR === 0 ? "10" : Math.abs(toR) === 1 ? "5" : "1";
-      el.style.pointerEvents = toR === 0 ? "auto" : "none";
+      el.style.pointerEvents = "auto";
 
       gsap.to(el, {
-        y: toC.y, z: toC.z, rotationX: toC.rx, opacity: toC.opacity,
-        duration: DUR, ease: "power4.out", force3D: true,
+        y: toC.y,
+        z: toC.z,
+        rotationX: toC.rx,
+        opacity: toC.opacity,
+        duration: 0.42,
+        ease: "power3.out",
+        force3D: true,
+        overwrite: "auto",
       });
     });
-
-    setTimeout(() => setAnim(false), DUR * 1000 + 80);
   };
 
   // Init on mount
   useEffect(() => {
     setAll(0);
+    resetTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, []);
-
-  // Auto-play every 5s
-  useEffect(() => {
-    const t = setInterval(() => {
-      animateTo((curRef.current + 1) % reviews.length);
-    }, 5000);
-    return () => clearInterval(t);
-  }, [animating]);
 
   return (
     <section id="testimonials" className="tcarousel-section">
@@ -136,24 +149,32 @@ export default function TestimonialsCarousel() {
           {/* RIGHT — 3D slider */}
           <div className="tcarousel-right reveal delay-2">
 
-            {/* Mouse follower */}
-            <div className="testimonial-mouse-follower" aria-hidden="true">
+            {/* Action button to change cards */}
+            <button
+              onClick={() => animateTo((curRef.current + 1) % reviews.length)}
+              aria-label="Next testimonial"
+              className="testimonial-nav-btn"
+            >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                 <path d="M12 5v14M5 12l7-7 7 7" stroke="white" strokeWidth="2.5"
                       strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </div>
+            </button>
 
             <div className="tslider-wrap">
               <div style={{position:"relative",transformStyle:"preserve-3d",minHeight:"400px"}}>
                 {reviews.map((r,i) => (
                   <div key={i}
                     ref={(el) => (refs.current[i] = el)}
+                    onClick={() => {
+                      if (i !== curRef.current) animateTo(i);
+                    }}
                     style={{
                       position: i===0 ? "relative" : "absolute",
                       top:0, left:0, width:"100%",
                       transformStyle:"preserve-3d",
                       backfaceVisibility:"hidden",
+                      cursor: i === cur ? "default" : "pointer",
                     }}
                   >
                     <div className="tcard">
@@ -244,12 +265,39 @@ export default function TestimonialsCarousel() {
 
         /* Right: 3D perspective container */
         .tcarousel-right { position:relative; }
-        .testimonial-mouse-follower {
-          position:absolute; top:50%; left:50%;
-          pointer-events:none; z-index:20;
-          width:64px; height:64px; border-radius:50%; background:#FF5B2E;
-          display:flex; align-items:center; justify-content:center;
-          will-change:transform,opacity;
+        .testimonial-nav-btn {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 40;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background: #FF5B2E;
+          border: none;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          pointer-events: auto;
+          box-shadow: 0 6px 24px rgba(255, 91, 46, 0.45);
+          transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, box-shadow 0.25s ease;
+        }
+        .testimonial-nav-btn:hover {
+          background: #E44A20;
+          transform: translate(-50%, -50%) scale(1.1);
+          box-shadow: 0 8px 32px rgba(255, 91, 46, 0.65);
+        }
+        .testimonial-nav-btn:active {
+          transform: translate(-50%, -50%) scale(0.93);
+        }
+        .testimonial-nav-btn svg {
+          transition: transform 0.2s ease;
+        }
+        .testimonial-nav-btn:hover svg {
+          transform: translateY(-2px);
         }
 
         .tslider-wrap {
