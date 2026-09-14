@@ -4,12 +4,12 @@ import { Star, CircleCheck } from "lucide-react";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 // Position config — matches home-desktop.js initTestimonialVerticalSlider exactly
-const D = 30, U = 10, P = 60, DUR = 0.725;
+const D = 13.5, U = 6, P = 32, DUR = 0.725;
 const POS: Record<string, { y: string; z: string; rx: number; opacity: number }> = {
   "-2": { y:`${D}em`,  z:`-${U}em`, rx:-P, opacity:0 },
-  "-1": { y:`${D}em`,  z:`-${U}em`, rx:-P, opacity:1 },
+  "-1": { y:`${D}em`,  z:`-${U}em`, rx:-P, opacity:0.35 },
    "0": { y:"0em",     z:"0em",     rx:0,  opacity:1 },
-   "1": { y:`-${D}em`, z:`-${U}em`, rx:P,  opacity:1 },
+   "1": { y:`-${D}em`, z:`-${U}em`, rx:P,  opacity:0.35 },
    "2": { y:`-${D}em`, z:`-${U}em`, rx:P,  opacity:0 },
 };
 
@@ -101,10 +101,10 @@ export default function TestimonialsCarousel() {
 
           {/* LEFT */}
           <div className="tcarousel-left reveal">
-            <p className="eyebrow mb-4" style={{color:"#1163fb"}}>Client Success</p>
+            <p className="eyebrow mb-4" style={{color:"#FF5B2E"}}>Client Success</p>
             <h2 className="reveal delay-1 text-headline line-anim tcarousel-h text-white">
               <span>Words From Our</span>{" "}
-              <span style={{background:"linear-gradient(135deg,#4d8aff,#fff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
+              <span style={{background:"linear-gradient(135deg,#FF5B2E,#fff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
                 C-Suite Partners.
               </span>
             </h2>
@@ -145,7 +145,7 @@ export default function TestimonialsCarousel() {
             </div>
 
             <div className="tslider-wrap">
-              <div style={{position:"relative",transformStyle:"preserve-3d",minHeight:"420px"}}>
+              <div style={{position:"relative",transformStyle:"preserve-3d",minHeight:"400px"}}>
                 {reviews.map((r,i) => (
                   <div key={i}
                     ref={(el) => (refs.current[i] = el)}
@@ -181,7 +181,7 @@ export default function TestimonialsCarousel() {
                         <div>
                           <div className="tcard-name">
                             {r.name}
-                            <CircleCheck width={13} height={13} style={{color:"#1163fb"}}/>
+                            <CircleCheck width={13} height={13} style={{color:"#FF5B2E"}}/>
                           </div>
                           <div className="tcard-role">{r.role}</div>
                         </div>
@@ -203,14 +203,15 @@ export default function TestimonialsCarousel() {
       <style>{`
         .tcarousel-section {
           background: #000;
-          padding: clamp(48px,6vw,96px) 0;
+          padding: clamp(100px, 11vw, 180px) 0;
           border-top: 1px solid rgba(255,255,255,0.06);
+          overflow: hidden;
         }
         .tcarousel-layout {
           display: grid;
           grid-template-columns: 1fr 1.7fr;
           gap: clamp(2.5rem,5vw,6rem);
-          align-items: start;
+          align-items: center;
         }
         .tcarousel-h { margin: 0 0 1.75rem; }
 
@@ -237,7 +238,7 @@ export default function TestimonialsCarousel() {
           background:rgba(255,255,255,.2); flex-shrink:0;
           transition:width .3s ease, background .3s ease;
         }
-        .vn-item--on .vn-line { width:40px; background:#1163fb; }
+        .vn-item--on .vn-line { width:40px; background:#FF5B2E; }
         .vn-name { font-size:.8125rem; font-weight:600; color:rgba(255,255,255,.55); transition:color .2s; }
         .vn-item--on .vn-name { color:#fff; }
 
@@ -246,7 +247,7 @@ export default function TestimonialsCarousel() {
         .testimonial-mouse-follower {
           position:absolute; top:50%; left:50%;
           pointer-events:none; z-index:20;
-          width:64px; height:64px; border-radius:50%; background:#1163fb;
+          width:64px; height:64px; border-radius:50%; background:#FF5B2E;
           display:flex; align-items:center; justify-content:center;
           will-change:transform,opacity;
         }
@@ -266,10 +267,10 @@ export default function TestimonialsCarousel() {
         }
         .tcard-qm { position:absolute; top:1.75rem; right:2rem; pointer-events:none; }
         .tcard-meta  { display:flex; align-items:center; gap:12px; }
-        .tcard-tag   { padding:4px 14px; border-radius:9999px; border:1px solid rgba(17,99,251,.3); background:rgba(17,99,251,.08); font-size:.7rem; font-weight:700; color:#4d8aff; text-transform:uppercase; letter-spacing:.08em; }
+        .tcard-tag   { padding:4px 14px; border-radius:9999px; border:1px solid rgba(255,91,46,.3); background:rgba(255,91,46,.08); font-size:.7rem; font-weight:700; color:#FF5B2E; text-transform:uppercase; letter-spacing:.08em; }
         .tcard-quote { font-size:clamp(1rem,1rem+.15vw,1.25rem); font-weight:500; line-height:1.72; color:#fff; margin:0; flex:1; }
         .tcard-author { display:flex; align-items:center; gap:1rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.07); margin-top:auto; }
-        .tcard-av { width:46px; height:46px; border-radius:50%; overflow:hidden; border:2px solid rgba(17,99,251,.3); flex-shrink:0; }
+        .tcard-av { width:46px; height:46px; border-radius:50%; overflow:hidden; border:2px solid rgba(255,91,46,.3); flex-shrink:0; }
         .tcard-av img { width:100%; height:100%; object-fit:cover; }
         .tcard-name { font-size:.9375rem; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px; }
         .tcard-role { font-size:.8125rem; color:rgba(255,255,255,.4); margin-top:2px; }

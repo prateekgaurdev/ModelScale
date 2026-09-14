@@ -33,11 +33,11 @@ const {
   </head>
 
   <body>
-    <!-- Shared ambient glow layer -->
+    <!-- Shared ambient glow layer (hardware-accelerated radial glow) -->
     <div class="ambient-layer" aria-hidden="true">
-      <div class="ambient-orb" style="width:900px;height:700px;background:rgba(37,99,235,0.08);top:-240px;left:50%;transform:translateX(-50%)"></div>
-      <div class="ambient-orb" style="width:600px;height:600px;background:rgba(30,58,138,0.06);top:60vh;left:-160px"></div>
-      <div class="ambient-orb" style="width:500px;height:500px;background:rgba(49,46,129,0.05);top:140vh;right:-128px"></div>
+      <div class="ambient-orb" style="width:900px;height:700px;background:radial-gradient(circle, rgba(255,91,46,0.06) 0%, transparent 70%);top:-240px;left:50%;transform:translateX(-50%);"></div>
+      <div class="ambient-orb" style="width:600px;height:600px;background:radial-gradient(circle, rgba(184,199,232,0.12) 0%, transparent 70%);top:60vh;left:-160px;"></div>
+      <div class="ambient-orb" style="width:500px;height:500px;background:radial-gradient(circle, rgba(242,196,166,0.1) 0%, transparent 70%);top:140vh;right:-128px;"></div>
     </div>
 
     <Navbar client:load />
@@ -53,14 +53,15 @@ const {
 
     <script>
       /**
-       * ModelScale Animation Engine
+       * ModelScale Animation & Featherlight Scroll Engine
        * ─────────────────────────────────────────────────────────────────
-       * 1. Lenis v1.0.42 smooth scroll (correct API options)
+       * 1. Lenis smooth scroll: ultra-responsive, natural momentum
        * 2. GSAP ScrollTrigger integration via lenis.on("scroll")
        * 3. .line-anim per-character text reveal (GSAP stagger)
        * 4. .reveal IntersectionObserver entry animations
-       * 5. Services diagonal cards — CSS + IntersectionObserver (no pin conflict)
-       * 6. Mouse followers for portfolio & testimonials
+       * 5. Smooth natural card reveals (zero scroll hijacking / no jarring pins)
+       * 6. Scoped mouse followers for portfolio & testimonials
+       * 7. Seamless anchor click gliding
        * ─────────────────────────────────────────────────────────────────
        */
       import { gsap } from "gsap";
@@ -75,15 +76,15 @@ const {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
 
-      // ── 1. LENIS — Snappy, lightweight configuration ──────────────────
+      // ── 1. LENIS — Featherlight, Natural, Silky Smooth ────────────────
       const lenis = new Lenis({
         smoothWheel: true,
         syncTouch: false,
-        lerp: 0.12, // Faster, snappier smoothing (no heavy duration)
+        lerp: 0.09, // Natural, featherlight momentum easing
         orientation: "vertical",
         gestureOrientation: "vertical",
-        touchMultiplier: 2,
-        wheelMultiplier: 1,
+        touchMultiplier: 1.0, // 1:1 natural touch physics (not artificial)
+        wheelMultiplier: 1.0,
         infinite: false,
         autoResize: true,
       });
@@ -94,12 +95,11 @@ const {
       window.__ST    = ScrollTrigger;
 
       // ── GSAP + Lenis integration ──────────────────────────────────────
-      // Correct pattern: lenis emits scroll → tell ScrollTrigger to update
       lenis.on("scroll", () => ScrollTrigger.update());
 
-      // Drive Lenis from GSAP ticker (NOT requestAnimationFrame directly)
+      // Drive Lenis from GSAP ticker with graceful lag smoothing
       gsap.ticker.add((time) => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
+      gsap.ticker.lagSmoothing(500, 33);
 
       // Sync ScrollTrigger resize with Lenis
       ScrollTrigger.addEventListener("refresh", () => lenis.resize());
@@ -116,14 +116,20 @@ const {
         });
       });
 
-      // Keep Lenis in sync with native scroll (e.g. keyboard, scrollbar drag)
-      window.addEventListener("scroll", () => {
-        if (!lenis.isScrolling) {
-          lenis.scrollTo(window.scrollY, { immediate: true });
+      // ── 2. Seamless Anchor Click Gliding ──────────────────────────────
+      document.addEventListener("click", (e) => {
+        const target = (e.target as HTMLElement)?.closest?.('a[href^="#"]');
+        if (!target) return;
+        const href = target.getAttribute("href");
+        if (!href || href === "#" || href.length < 2) return;
+        const dest = document.querySelector(href);
+        if (dest) {
+          e.preventDefault();
+          lenis.scrollTo(dest as HTMLElement, { offset: -70, duration: 0.9 });
         }
-      }, { passive: true });
+      });
 
-      // ── 2. .reveal — IntersectionObserver ────────────────────────────
+      // ── 3. .reveal — Fast, Snappy IntersectionObserver ───────────────
       function initReveal() {
         const targets = document.querySelectorAll(".reveal, .reveal-blur, .reveal-scale");
         if (!targets.length) return;
@@ -134,28 +140,28 @@ const {
               io.unobserve(e.target);
             }
           }),
-          { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+          { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
         );
         targets.forEach((el) => io.observe(el));
       }
 
-      // ── 3. .line-anim — per-character GSAP stagger ───────────────────
+      // ── 4. .line-anim — per-character GSAP stagger ───────────────────
       function initLineAnimations() {
         document.querySelectorAll(".line-anim").forEach((heading) => {
-          const el = heading;
+          const el = heading as HTMLElement;
           if (el.dataset.lineAnimDone) return;
           el.dataset.lineAnimDone = "1";
 
           el.querySelectorAll("span").forEach((lineSpan) => {
             const walker = document.createTreeWalker(lineSpan, NodeFilter.SHOW_TEXT);
-            const textNodes = [];
-            let node;
+            const textNodes: Node[] = [];
+            let node: Node | null;
             while ((node = walker.nextNode())) {
               if (node.nodeValue?.trim()) textNodes.push(node);
             }
             textNodes.forEach((textNode) => {
               const parent = textNode.parentNode;
-              const text   = textNode.nodeValue;
+              const text   = textNode.nodeValue || "";
               const frag   = document.createDocumentFragment();
 
               // Desktop: per character. Mobile: per word.
@@ -175,7 +181,7 @@ const {
                   frag.appendChild(s);
                 });
               }
-              parent.replaceChild(frag, textNode);
+              parent?.replaceChild(frag, textNode);
             });
           });
 
@@ -183,15 +189,15 @@ const {
           if (!chars.length) return;
 
           gsap.fromTo(chars,
-            { y: 12, opacity: 0 },
+            { y: 10, opacity: 0 },
             {
               y: 0, opacity: 1,
-              stagger: 0.008,
+              stagger: 0.006,
               ease: "power2.out",
-              duration: 0.25,
+              duration: 0.22,
               scrollTrigger: {
                 trigger: el,
-                start: "top 85%",
+                start: "top 88%",
                 once: true,
               },
             }
@@ -199,129 +205,108 @@ const {
         });
       }
 
-      // ── 4. Services — Pinned Sequential Reveal ───────────────────────
+      // ── 5. Services — Fluid Stagger (No Pin / No Scroll Hijacking) ────
       function initServicesReveal() {
-        const section = document.querySelector(".services-section");
         const cards = document.querySelectorAll(".service-card-hz");
         const btn = document.querySelector(".services-view-all");
-        
-        if (!section || !cards.length) return;
+        if (!cards.length) return;
 
-        // Mobile: normal scroll trigger
-        if (window.innerWidth <= 1023) {
-          cards.forEach((card, i) => {
-            gsap.fromTo(card,
-              { y: 40, opacity: 0 },
-              {
-                y: 0, opacity: 1, duration: 0.65, ease: "power3.out",
-                scrollTrigger: { trigger: card, start: "top 85%", once: true }
-              }
-            );
-          });
-          return;
-        }
-
-        // Desktop: Pin and scrub reveal
-        // Start cards lower and hidden
-        gsap.set(cards, { opacity: 0, y: 80 });
-        if (btn) gsap.set(btn, { opacity: 0, y: 20 });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top 8%", // Pin when the section header is near the top
-            end: "+=120%",   // Generous scroll distance to keep pinned
-            pin: true,
-            scrub: true,     // Direct 1:1 scrub
-            anticipatePin: 1
-          }
-        });
-
-        // First card starts immediately at the beginning of the pin (0)
-        // Subsequent cards come in one by one with very short delay
         cards.forEach((card, i) => {
-          tl.to(card, {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power2.out"
-          }, i * 0.2); // VERY short delay between each card (0.2s relative to scrub)
+          gsap.fromTo(card,
+            { y: 25, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.45,
+              delay: i * 0.08,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 90%",
+                once: true
+              }
+            }
+          );
         });
 
         if (btn) {
-          tl.to(btn, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power2.out"
-          }, "-=0.2");
+          gsap.fromTo(btn,
+            { y: 15, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: btn,
+                start: "top 92%",
+                once: true
+              }
+            }
+          );
         }
       }
 
-      // ── 5. Mouse followers ────────────────────────────────────────────
+      // ── 6. Scoped Mouse Followers (Zero Global Overhead) ──────────────
       function initMouseFollowers() {
         // Portfolio DRAG follower
-        const portSection  = document.querySelector(".portfolio-section");
-        const portFollower = document.querySelector(".portfolio-follower");
+        const portSection  = document.querySelector(".portfolio-section") as HTMLElement | null;
+        const portFollower = document.querySelector(".portfolio-follower") as HTMLElement | null;
         if (portSection && portFollower) {
-          let rafId = null;
+          let rafId: number | null = null;
           let inside = false;
           gsap.set(portFollower, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
 
-          const show = () => gsap.to(portFollower, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
-          const hide = () => gsap.to(portFollower, { scale: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+          const show = () => gsap.to(portFollower, { scale: 1, opacity: 1, duration: 0.25, ease: "power2.out" });
+          const hide = () => gsap.to(portFollower, { scale: 0, opacity: 0, duration: 0.2, ease: "power2.out" });
 
-          document.addEventListener("mousemove", (e) => {
+          portSection.addEventListener("pointerenter", () => { inside = true; show(); }, { passive: true });
+          portSection.addEventListener("pointerleave", () => { inside = false; hide(); }, { passive: true });
+          portSection.addEventListener("pointermove", (e: PointerEvent) => {
+            if (!inside) { inside = true; show(); }
             const rect = portSection.getBoundingClientRect();
-            const inArea = e.clientY >= rect.top - 20 && e.clientY <= rect.bottom + 80;
-            if (inArea) {
-              if (!inside) { inside = true; show(); }
-              if (rafId) cancelAnimationFrame(rafId);
-              rafId = requestAnimationFrame(() => {
-                gsap.to(portFollower, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.5, ease: "power3.out" });
-              });
-            } else if (inside) { inside = false; hide(); }
-          });
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+              gsap.to(portFollower, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.35, ease: "power3.out" });
+            });
+          }, { passive: true });
         }
 
         // Testimonials arrow follower
-        const testRight   = document.querySelector(".testimonials-right");
-        const testFollow  = document.querySelector(".testimonial-mouse-follower");
+        const testRight   = document.querySelector(".testimonials-right") as HTMLElement | null;
+        const testFollow  = document.querySelector(".testimonial-mouse-follower") as HTMLElement | null;
         const testArrow   = testFollow?.querySelector("svg");
         if (testRight && testFollow && testArrow) {
-          let rafId2 = null;
+          let rafId2: number | null = null;
           let inside2 = false;
           gsap.set(testFollow, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
 
-          const show2 = () => gsap.to(testFollow, { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" });
-          const hide2 = () => gsap.to(testFollow, { scale: 0, opacity: 0, duration: 0.25, ease: "power2.out" });
+          const show2 = () => gsap.to(testFollow, { scale: 1, opacity: 1, duration: 0.25, ease: "power2.out" });
+          const hide2 = () => gsap.to(testFollow, { scale: 0, opacity: 0, duration: 0.2, ease: "power2.out" });
 
-          document.addEventListener("mousemove", (e) => {
+          testRight.addEventListener("pointerenter", () => { inside2 = true; show2(); }, { passive: true });
+          testRight.addEventListener("pointerleave", () => { inside2 = false; hide2(); }, { passive: true });
+          testRight.addEventListener("pointermove", (e: PointerEvent) => {
+            if (!inside2) { inside2 = true; show2(); }
             const rect = testRight.getBoundingClientRect();
-            const inArea = e.clientX >= rect.left && e.clientX <= rect.right &&
-                           e.clientY >= rect.top  && e.clientY <= rect.bottom;
-            if (inArea) {
-              if (!inside2) { inside2 = true; show2(); }
-              const mid = rect.top + rect.height / 2;
-              gsap.to(testArrow, { rotation: e.clientY < mid ? 0 : 180, duration: 0.18, ease: "power2.out" });
-              if (rafId2) cancelAnimationFrame(rafId2);
-              rafId2 = requestAnimationFrame(() => {
-                gsap.to(testFollow, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.45, ease: "power3.out" });
-              });
-            } else if (inside2) { inside2 = false; hide2(); }
-          });
+            const mid = rect.top + rect.height / 2;
+            gsap.to(testArrow, { rotation: e.clientY < mid ? 0 : 180, duration: 0.15, ease: "power2.out" });
+            if (rafId2) cancelAnimationFrame(rafId2);
+            rafId2 = requestAnimationFrame(() => {
+              gsap.to(testFollow, { x: e.clientX - rect.left, y: e.clientY - rect.top, duration: 0.35, ease: "power3.out" });
+            });
+          }, { passive: true });
         }
       }
 
-      // ── 6. Parallax Effects ───────────────────────────────────────────
+      // ── 7. Parallax Effects ───────────────────────────────────────────
       function initParallax() {
-        // Just keep the portfolio image parallax, remove heavy video parallax
         const portImages = document.querySelectorAll(".port-card-img");
         portImages.forEach((img) => {
           gsap.fromTo(img, 
-            { yPercent: -10 },
+            { yPercent: -8 },
             { 
-              yPercent: 10,
+              yPercent: 8,
               ease: "none",
               scrollTrigger: {
                 trigger: img.parentElement,
@@ -341,8 +326,7 @@ const {
         initServicesReveal();
         initMouseFollowers();
         initParallax();
-        // Final refresh after everything is set up
-        setTimeout(() => ScrollTrigger.refresh(), 400);
+        setTimeout(() => ScrollTrigger.refresh(), 300);
       }
 
       if (document.readyState === "complete") {

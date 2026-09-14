@@ -112,7 +112,7 @@ export default function Navbar() {
                       : 'text-gray-300 hover:text-white hover:bg-white/[0.04]'
                   }`}>
                     {item.id === 'inventivai' && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#1163FB] mr-1 animate-pulse" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FF5B2E] mr-1 animate-pulse" />
                     )}
                     {item.label}
                     <ChevronDown className={`w-3.5 h-3.5 ml-0.5 opacity-60 transition-transform duration-200 ${
@@ -123,37 +123,37 @@ export default function Navbar() {
                   {/* ---- ModelScaleAI dropdown ---- */}
                   {item.id === 'inventivai' && open === 'inventivai' && (
                     <DropdownWrapper>
-                      <div className="grid grid-cols-[200px_1fr] gap-0 min-w-[820px]">
+                      <div className="grid grid-cols-[210px_1fr] gap-0 min-w-[820px]">
                         {/* Left: tabs + CTA card */}
-                        <div className="border-r border-white/[0.07] p-5 flex flex-col gap-4">
-                          <span className="text-[0.65rem] font-bold uppercase tracking-widest text-[#1163FB]">
+                        <div className="border-r border-white/[0.08] p-5 flex flex-col gap-3.5 bg-white/[0.01]">
+                          <span className="text-[0.65rem] font-mono font-bold uppercase tracking-wider text-[#FF5B2E] px-1">
                             AI Suite
                           </span>
                           {(['solutions', 'hub'] as const).map((t) => (
                             <button
                               key={t}
                               onClick={() => setAiTab(t)}
-                              className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-colors ${
+                              className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center justify-between transition-all cursor-pointer ${
                                 aiTab === t
-                                  ? 'bg-[#1163FB] text-white'
-                                  : 'text-gray-400 hover:bg-white/[0.05] hover:text-white'
+                                  ? 'bg-[#FF5B2E] text-white shadow-[0_2px_12px_rgba(255,91,46,0.35)]'
+                                  : 'text-gray-400 hover:bg-white/[0.06] hover:text-white'
                               }`}
                             >
-                              {t === 'solutions' ? 'AI Solutions' : 'Research & Insights'}
+                              <span>{t === 'solutions' ? 'AI Solutions' : 'Research & Insights'}</span>
                               {t === 'solutions' ? <BrainCircuit className="w-3.5 h-3.5" /> : <BookOpen className="w-3.5 h-3.5" />}
                             </button>
                           ))}
-                          <div className="mt-auto pt-4 border-t border-white/[0.07] p-4 rounded-xl bg-gradient-to-br from-blue-900/30 to-black/60 border border-blue-500/20">
+                          <div className="mt-auto pt-3 border-t border-white/[0.08] p-3.5 rounded-xl bg-gradient-to-br from-[#FF5B2E]/12 via-[#FF5B2E]/[0.03] to-black/40 border border-[#FF5B2E]/20">
                             <div className="flex items-center gap-1.5 mb-1.5">
-                              <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-                              <span className="text-[0.65rem] font-bold text-yellow-400 uppercase tracking-wide">Enterprise AI</span>
+                              <Sparkles className="w-3.5 h-3.5 text-[#FF5B2E]" />
+                              <span className="text-[0.65rem] font-mono font-bold text-[#FF5B2E] uppercase tracking-wide">Enterprise AI</span>
                             </div>
-                            <p className="text-[0.7rem] text-gray-300 mb-3 leading-snug">
+                            <p className="text-[0.72rem] text-gray-300 mb-2.5 leading-snug">
                               Deploy production Agentic RAG in 2 weeks.
                             </p>
                             <button
                               onClick={() => consult('nav-ai-cta')}
-                              className="text-[0.75rem] font-bold text-[#1163FB] hover:text-white flex items-center gap-1 transition-colors"
+                              className="text-[0.75rem] font-bold text-[#FF5B2E] hover:text-white flex items-center gap-1 transition-colors cursor-pointer"
                             >
                               Schedule a call <ArrowUpRight className="w-3 h-3" />
                             </button>
@@ -163,20 +163,25 @@ export default function Navbar() {
                         {/* Right: solution grid or insights */}
                         <div className="p-5">
                           {aiTab === 'solutions' ? (
-                            <div className="grid grid-cols-3 gap-2">
-                              {aiServices.map((s) => (
-                                <a
-                                  key={s}
-                                  href="#ai-suite"
-                                  className="block px-3 py-2.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all"
-                                >
-                                  {s}
-                                </a>
-                              ))}
+                            <div>
+                              <span className="text-[0.65rem] font-mono font-bold text-gray-500 uppercase tracking-wider block mb-2 px-3">
+                                Available Capabilities
+                              </span>
+                              <div className="grid grid-cols-3 gap-1.5">
+                                {aiServices.map((s) => (
+                                  <a
+                                    key={s}
+                                    href="#ai-suite"
+                                    className="block px-3 py-2.5 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] transition-all"
+                                  >
+                                    {s}
+                                  </a>
+                                ))}
+                              </div>
                             </div>
                           ) : (
                             <div className="space-y-2">
-                              <span className="text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest">
+                              <span className="text-[0.65rem] font-mono font-bold text-gray-500 uppercase tracking-widest block mb-2 px-3">
                                 Featured Insights
                               </span>
                               {[
@@ -187,7 +192,7 @@ export default function Navbar() {
                                 <a
                                   key={t}
                                   href="#faq"
-                                  className="block px-3 py-2.5 rounded-lg text-xs text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all"
+                                  className="block px-3 py-2.5 rounded-lg text-xs text-gray-300 hover:text-white hover:bg-white/[0.06] transition-all"
                                 >
                                   {t}
                                 </a>
@@ -202,7 +207,7 @@ export default function Navbar() {
                   {/* ---- About dropdown ---- */}
                   {item.id === 'about' && open === 'about' && (
                     <DropdownWrapper cls="min-w-[220px]">
-                      <div className="p-3 space-y-0.5">
+                      <div className="p-2.5 space-y-0.5">
                         {[
                           ['About ModelScale',      '#awards'],
                           ['Leadership Team',   '#awards'],
@@ -212,7 +217,7 @@ export default function Navbar() {
                           ['Compliance',        '#compliance'],
                           ['Careers',           '#faq'],
                         ].map(([label, href]) => (
-                          <a key={label} href={href} className="block px-3 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/[0.05] transition-all">
+                          <a key={label} href={href} className="block px-3 py-2 rounded-lg text-xs font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] transition-all">
                             {label}
                           </a>
                         ))}
@@ -229,15 +234,15 @@ export default function Navbar() {
                           return (
                             <div key={cat.title}>
                               <div className="flex items-center gap-2 mb-3">
-                                <Icon className="w-3.5 h-3.5 text-[#1163FB]" />
-                                <span className="text-[0.65rem] font-bold uppercase tracking-widest text-[#1163FB]">
+                                <Icon className="w-3.5 h-3.5 text-[#FF5B2E]" />
+                                <span className="text-[0.65rem] font-mono font-bold uppercase tracking-widest text-[#FF5B2E]">
                                   {cat.title}
                                 </span>
                               </div>
                               <ul className="space-y-0.5">
                                 {cat.items.map((i) => (
                                   <li key={i}>
-                                    <a href="#services" className="block px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-white hover:bg-white/[0.05] transition-all">
+                                    <a href="#services" className="block px-3 py-2 rounded-lg text-xs text-gray-400 hover:text-white hover:bg-white/[0.06] transition-all">
                                       {i}
                                     </a>
                                   </li>
@@ -258,12 +263,12 @@ export default function Navbar() {
                           <a
                             key={ind.name}
                             href="#case-studies"
-                            className="p-3 rounded-xl hover:bg-white/[0.05] transition-all group block"
+                            className="p-3 rounded-xl hover:bg-white/[0.06] transition-all group block"
                           >
-                            <div className="text-xs font-bold text-white group-hover:text-[#1163FB] transition-colors">
+                            <div className="text-xs font-bold text-white group-hover:text-[#FF5B2E] transition-colors">
                               {ind.name}
                             </div>
-                            <div className="text-[0.7rem] text-gray-500 mt-0.5">{ind.desc}</div>
+                            <div className="text-[0.7rem] text-gray-400 mt-0.5">{ind.desc}</div>
                           </a>
                         ))}
                       </div>
@@ -359,10 +364,10 @@ function DropdownWrapper({
   cls?: string;
 }) {
   return (
-    <div className={`absolute top-full left-0 pt-2 z-[200] ${cls}`}>
+    <div className={`absolute top-full left-0 pt-2.5 z-[200] ${cls}`}>
       <div
-        style={{ background: '#0d1119' }}
-        className="border border-[#1e2538] rounded-2xl shadow-[0_32px_96px_rgba(0,0,0,0.9),0_2px_0_rgba(255,255,255,0.06)_inset] overflow-hidden"
+        style={{ background: '#0D0D11' }}
+        className="border border-white/[0.1] rounded-2xl shadow-[0_32px_96px_rgba(0,0,0,0.85),0_1px_0_rgba(255,255,255,0.06)_inset] overflow-hidden"
       >
         {children}
       </div>

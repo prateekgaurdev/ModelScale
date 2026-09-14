@@ -97,30 +97,55 @@ import GradientCanvas from '../Motion/GradientCanvas.astro';
   const el = document.getElementById('msTypeTarget');
   if (el) {
     let idx = 0;
+    let t: any = null;
+    let isVisible = true;
+
     const play = () => {
+      if (!isVisible) return;
       const text = POSTS[idx];
       let i = 0;
       el.innerHTML = '<span class="cursor"></span>';
-      const t = setInterval(() => {
+      clearInterval(t);
+      t = setInterval(() => {
+        if (!isVisible) return;
         i += 2;
         el.textContent = text.slice(0, i);
         const c = document.createElement('span'); c.className = 'cursor'; el.appendChild(c);
-        if (i >= text.length) { clearInterval(t); setTimeout(() => { idx = (idx + 1) % POSTS.length; play(); }, 3400); }
+        if (i >= text.length) {
+          clearInterval(t);
+          setTimeout(() => { idx = (idx + 1) % POSTS.length; play(); }, 3400);
+        }
       }, 28);
     };
-    play();
+
+    const heroObs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        isVisible = e.isIntersecting;
+        if (isVisible && !t) {
+          play();
+        } else if (!isVisible && t) {
+          clearInterval(t);
+          t = null;
+        }
+      });
+    }, { threshold: 0.1 });
+    heroObs.observe(el);
   }
-  // magnetic buttons
+
+  // Optimized magnetic buttons
   document.querySelectorAll<HTMLElement>('.ms-magnet').forEach((el) => {
     let raf = 0;
-    el.addEventListener('mousemove', (e) => {
+    el.addEventListener('pointermove', (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
-      const dx = (e.clientX - (r.left + r.width / 2)) * 0.28;
-      const dy = (e.clientY - (r.top + r.height / 2)) * 0.28;
+      const dx = (e.clientX - (r.left + r.width / 2)) * 0.22;
+      const dy = (e.clientY - (r.top + r.height / 2)) * 0.22;
       cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => { el.style.transform = `translate(${dx}px, ${dy}px)`; });
-    });
-    el.addEventListener('mouseleave', () => { cancelAnimationFrame(raf); el.style.transform = 'translate(0,0)'; });
-    el.style.transition = 'transform .35s cubic-bezier(0.22,1,0.36,1)';
+      raf = requestAnimationFrame(() => { el.style.transform = `translate3d(${dx}px, ${dy}px, 0)`; });
+    }, { passive: true });
+    el.addEventListener('pointerleave', () => {
+      cancelAnimationFrame(raf);
+      el.style.transform = 'translate3d(0,0,0)';
+    }, { passive: true });
+    el.style.transition = 'transform .25s cubic-bezier(0.22,1,0.36,1)';
   });
 </script>

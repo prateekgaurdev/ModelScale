@@ -59,7 +59,7 @@ export default function FAQAccordion() {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p class="mt-4 text-base text-gray-400 font-normal">
+          <p className="mt-4 text-base text-gray-400 font-normal">
             Everything you need to know about our engagement models, security protocols, and engineering lifecycle.
           </p>
         </div>

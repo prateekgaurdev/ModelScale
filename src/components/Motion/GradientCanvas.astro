@@ -23,12 +23,12 @@ const { intensity = 1 } = Astro.props;
 </style>
 
 <script>
-  // Runs once per canvas on the page.
+  // Runs once per canvas on the page with viewport-aware RAF loop
   document.querySelectorAll<HTMLCanvasElement>('.ms-gradient-canvas').forEach((canvas) => {
     if (canvas.dataset.msBound) return; canvas.dataset.msBound = '1';
     const ctx = canvas.getContext('2d')!;
     const intensity = parseFloat(canvas.dataset.intensity || '1');
-    let raf: number, w = 0, h = 0, dpr = 1;
+    let raf = 0, w = 0, h = 0, dpr = 1, isVisible = true;
     const blobs = [
       { x: 0.20, y: 0.30, r: 0.55, c: [255, 91, 46,  0.20 * intensity], vx:  0.00012, vy:  0.00007 },
       { x: 0.75, y: 0.25, r: 0.50, c: [184, 199, 232, 0.35 * intensity], vx: -0.00009, vy:  0.00011 },
@@ -38,14 +38,21 @@ const { intensity = 1 } = Astro.props;
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = canvas.clientWidth; h = canvas.clientHeight;
+      if (w === 0 || h === 0) return;
       canvas.width = w * dpr; canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', resize, { passive: true });
+
     let t0 = performance.now();
     const draw = (t: number) => {
-      const dt = t - t0; t0 = t;
+      if (!isVisible) {
+        raf = 0;
+        return;
+      }
+      const dt = Math.min(t - t0, 64); // Cap delta to prevent jump after long pause
+      t0 = t;
       ctx.clearRect(0, 0, w, h);
       const g0 = ctx.createLinearGradient(0, 0, 0, h);
       g0.addColorStop(0, '#F5F3EE'); g0.addColorStop(1, '#EEEAE1');
@@ -64,6 +71,17 @@ const { intensity = 1 } = Astro.props;
       ctx.globalCompositeOperation = 'source-over';
       raf = requestAnimationFrame(draw);
     };
-    raf = requestAnimationFrame(draw);
+
+    // Pause rendering loop completely when offscreen to preserve 120fps scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible && !raf) {
+          t0 = performance.now();
+          raf = requestAnimationFrame(draw);
+        }
+      });
+    }, { threshold: 0.01 });
+    io.observe(canvas);
   });
 </script>

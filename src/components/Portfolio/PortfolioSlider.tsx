@@ -117,10 +117,10 @@ export default function PortfolioSlider() {
         {/* Header */}
         <div className="portfolio-header">
           <div>
-            <p className="eyebrow reveal mb-3" style={{color:"#1163fb"}}>Innovation Engineered</p>
+            <p className="eyebrow reveal mb-3" style={{color:"#FF5B2E"}}>Innovation Engineered</p>
             <h2 className="reveal delay-1 text-headline line-anim text-white">
               <span>Delivered in Production.</span>{" "}
-              <span style={{background:"linear-gradient(135deg,#4d8aff,#fff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
+              <span style={{background:"linear-gradient(135deg,#FF5B2E,#fff)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>
                 At Real-World Scale.
               </span>
             </h2>
@@ -190,9 +190,6 @@ export default function PortfolioSlider() {
                   <svg className="button__icon-svg" viewBox="0 0 14 15" fill="none" width="11">
                     <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="white"/>
                   </svg>
-                  <svg className="button__icon-svg button__icon-svg--copy" viewBox="0 0 14 15" fill="none" width="11">
-                    <path d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z" fill="white"/>
-                  </svg>
                 </div>
               </button>
             </div>
@@ -241,7 +238,7 @@ export default function PortfolioSlider() {
           z-index: 50;
           width: 80px; height: 80px;
           border-radius: 50%;
-          background: #1163fb;
+          background: #FF5B2E;
           color: #fff;
           font-size: 11px; font-weight: 800;
           letter-spacing: .08em; text-transform: uppercase;
@@ -262,7 +259,7 @@ export default function PortfolioSlider() {
           display: flex; align-items: center; justify-content: center;
           transition: background .2s, color .2s;
         }
-        .port-arrow:hover { background: #1163fb; color: #fff; border-color: #1163fb; }
+        .port-arrow:hover { background: #FF5B2E; color: #fff; border-color: #FF5B2E; }
 
         .portfolio-tabs {
           display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px;
@@ -280,8 +277,8 @@ export default function PortfolioSlider() {
           transition: all .22s ease;
         }
         .port-tab--active {
-          background: #1163fb; border-color: #1163fb; color: #fff;
-          box-shadow: 0 0 16px -4px rgba(17,99,251,0.6);
+          background: #FF5B2E; border-color: #FF5B2E; color: #fff;
+          box-shadow: 0 0 16px -4px rgba(255,91,46,0.6);
         }
 
         .port-progress-bar {
@@ -289,7 +286,7 @@ export default function PortfolioSlider() {
           border-radius: 9999px; overflow: hidden; margin: 12px 0 28px;
         }
         .port-progress-fill {
-          height: 100%; background: #1163fb; border-radius: 9999px;
+          height: 100%; background: #FF5B2E; border-radius: 9999px;
           transition: width .5s cubic-bezier(0.22,1,0.36,1);
           will-change: width;
         }
@@ -297,7 +294,7 @@ export default function PortfolioSlider() {
         /* Main card */
         .portfolio-card {
           background: #0d1017;
-          border: 1px solid rgba(17,99,251,0.25);
+          border: 1px solid rgba(255,255,255,0.1);
           border-radius: 1.5rem;
           padding: clamp(1.5rem,3vw,2.5rem);
           box-shadow: 0 24px 80px rgba(0,0,0,0.5);
@@ -313,7 +310,7 @@ export default function PortfolioSlider() {
           flex-shrink: 0; padding: 8px; overflow: hidden;
         }
         .port-card-logo { max-width: 36px; max-height: 36px; object-fit: contain; filter: brightness(1.2); }
-        .port-card-tag  { font-size:.7rem; font-weight:700; color:#1163fb; text-transform:uppercase; letter-spacing:.08em; }
+        .port-card-tag  { font-size:.7rem; font-weight:700; color:#FF5B2E; text-transform:uppercase; letter-spacing:.08em; }
         .port-card-name { font-size:.9375rem; font-weight:700; color:#fff; margin-top:2px; }
         .port-card-counter { margin-left: auto; font-family: monospace; font-size: .8rem; }
         .port-cnt-num { color: #fff; font-weight: 700; }
@@ -331,7 +328,10 @@ export default function PortfolioSlider() {
         .port-card-body-txt { font-size:.9rem; line-height:1.7; color:#6b7280; margin:0; }
 
         .port-card-metrics {
-          display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+          display: grid; grid-template-columns: repeat(3,1fr); gap: .75rem;
+          margin: 1.5rem 0;
+        }
+        .port-metric-box {
           padding: 1.25rem; background: rgba(0,0,0,0.4);
           border: 1px solid rgba(255,255,255,0.07); border-radius: 1rem;
         }
@@ -342,11 +342,19 @@ export default function PortfolioSlider() {
         .port-chip  { padding:3px 10px; border-radius:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); font-size:.6875rem; font-family:monospace; color:#9ca3af; }
 
         .port-cta-btn {
-          background: #1163fb; color: #fff; padding: 12px 22px;
+          background: #FF5B2E; color: #fff; padding: 12px 22px;
           font-size: .875rem; border-radius: 9999px; align-self: flex-start;
-          box-shadow: 0 0 20px -4px rgba(17,99,251,0.5);
+          box-shadow: 0 0 20px -4px rgba(255,91,46,0.5);
+          gap: 8px;
+          display: inline-flex;
+          align-items: center;
         }
-        .port-cta-btn:hover { background: #0c4fcb; }
+        .port-cta-btn:hover { background: #E44A20; }
+        .port-cta-btn .button__icon-wrapper {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
 
         .port-card-right {}
         .port-card-img-wrap {

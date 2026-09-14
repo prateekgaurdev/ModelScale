@@ -97,33 +97,60 @@ export default function AIServicesSplitScroll() {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 250;
-      
-      for (let i = aiDisciplines.length - 1; i >= 0; i--) {
-        const disc = aiDisciplines[i];
-        const el = sectionRefs.current[disc.id];
-        if (el) {
-          const top = el.offsetTop;
-          if (scrollPosition >= top) {
-            setActiveId(disc.id);
-            break;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const threshold = 350;
+          let currentActive = aiDisciplines[0].id;
+          
+          for (let i = aiDisciplines.length - 1; i >= 0; i--) {
+            const disc = aiDisciplines[i];
+            const el = sectionRefs.current[disc.id];
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= threshold) {
+                currentActive = disc.id;
+                break;
+              }
+            }
           }
-        }
+          setActiveId(currentActive);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    // In case Lenis scroll is active on window
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.on('scroll', handleScroll);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (lenis) {
+        lenis.off('scroll', handleScroll);
+      }
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
     setActiveId(id);
     const element = sectionRefs.current[id];
     if (element) {
-      const yOffset = -120;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      const lenis = (window as any).__lenis;
+      if (lenis) {
+        lenis.scrollTo(element, { offset: -120, duration: 0.8 });
+      } else {
+        const yOffset = -120;
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     }
   };
 
@@ -135,7 +162,7 @@ export default function AIServicesSplitScroll() {
     <section id="ai-suite" className="py-24 bg-[#0a0a0a] relative border-t border-white/10 text-white">
       
       {/* Background radial accent */}
-      <div className="absolute top-1/4 right-10 w-[600px] h-[600px] bg-blue-600/10 blur-[180px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 right-10 w-[600px] h-[600px] bg-[#FF5B2E]/5 blur-[180px] rounded-full pointer-events-none" />
 
       <div className="layout-container-lg relative z-10">
         
@@ -182,7 +209,7 @@ export default function AIServicesSplitScroll() {
                       {/* Active Circle Arrow Indicator (Matching Image 2) */}
                       <span className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
                         isActive 
-                          ? 'bg-[#1163FB] text-white shadow-glow-blue scale-100' 
+                          ? 'bg-[#FF5B2E] text-white shadow-[0_2px_12px_rgba(255,91,46,0.4)] scale-100' 
                           : 'bg-transparent text-transparent opacity-0 -translate-x-2'
                       }`}>
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -199,7 +226,7 @@ export default function AIServicesSplitScroll() {
               {/* Sticky Quick CTA Box */}
               <div className="hidden lg:block pt-6 border-t border-white/10">
                 <div className="p-4 rounded-2xl bg-black/60 border border-white/10">
-                  <div className="text-xs font-bold text-[#fdf073] mb-1 flex items-center gap-1.5">
+                  <div className="text-xs font-bold text-[#FF5B2E] mb-1 flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>Need Custom AI Scope?</span>
                   </div>
@@ -208,7 +235,7 @@ export default function AIServicesSplitScroll() {
                   </p>
                   <button
                     onClick={() => openContactModal('sticky-sidebar-cta')}
-                    className="w-full py-2.5 px-3 bg-[#1163FB] hover:bg-[#0c4fcb] text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-[0_0_24px_-6px_rgba(17,99,251,0.6)]"
+                    className="w-full py-2.5 px-3 bg-[#FF5B2E] hover:bg-[#E44A20] text-white text-xs font-bold rounded-lg transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-[0_4px_16px_rgba(255,91,46,0.3)]"
                   >
                     <span>Consult Our AI Experts</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -233,7 +260,7 @@ export default function AIServicesSplitScroll() {
                     <a 
                       href="#contact" 
                       onClick={(e) => { e.preventDefault(); openContactModal(disc.name); }}
-                      className="wht-link-line font-semibold text-white underline decoration-white decoration-1 underline-offset-4 hover:text-[#1163FB] transition-colors cursor-pointer"
+                      className="wht-link-line font-semibold text-white underline decoration-white decoration-1 underline-offset-4 hover:text-[#FF5B2E] transition-colors cursor-pointer"
                     >
                       {disc.link1Text}
                     </a>
@@ -241,7 +268,7 @@ export default function AIServicesSplitScroll() {
                     <a 
                       href="#contact" 
                       onClick={(e) => { e.preventDefault(); openContactModal(disc.name); }}
-                      className="wht-link-line font-semibold text-white underline decoration-white decoration-1 underline-offset-4 hover:text-[#1163FB] transition-colors cursor-pointer"
+                      className="wht-link-line font-semibold text-white underline decoration-white decoration-1 underline-offset-4 hover:text-[#FF5B2E] transition-colors cursor-pointer"
                     >
                       {disc.link2Text}
                     </a>
@@ -260,8 +287,8 @@ export default function AIServicesSplitScroll() {
                   
                   {/* Category Section Header (Matching Image 2) */}
                   <div className="mb-8">
-                    <div className="text-sm font-bold text-[#1163FB] uppercase tracking-wider mb-2 flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#1163FB]" />
+                    <div className="text-sm font-bold text-[#FF5B2E] uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#FF5B2E]" />
                       <span>{disc.name}</span>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-white">
@@ -276,13 +303,13 @@ export default function AIServicesSplitScroll() {
                       return (
                         <div
                           key={appIdx}
-                          className="p-5 sm:p-6 rounded-2xl bg-[#141721] border border-white/5 hover:border-[#1163FB]/40 transition-all duration-300 flex flex-col justify-between min-h-[170px] group hover:-translate-y-1"
+                          className="p-5 sm:p-6 rounded-2xl bg-[#141721] border border-white/5 hover:border-[#FF5B2E]/40 transition-all duration-300 flex flex-col justify-between min-h-[170px] group hover:-translate-y-1"
                         >
-                          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-[#1163FB] group-hover:text-white transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-6 group-hover:bg-[#FF5B2E] group-hover:text-white transition-colors">
                             <IconComp className="w-5 h-5" />
                           </div>
 
-                          <h4 className="text-sm font-semibold text-white leading-snug group-hover:text-blue-200 transition-colors">
+                          <h4 className="text-sm font-semibold text-white leading-snug group-hover:text-white transition-colors">
                             {app.title}
                           </h4>
                         </div>
@@ -307,7 +334,7 @@ export default function AIServicesSplitScroll() {
                       <ul className="space-y-1.5 text-xs text-gray-400">
                         {disc.featureHighlights.map((hl, i) => (
                           <li key={i} className="flex items-center gap-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#1163FB]" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#FF5B2E]" />
                             <span>{hl}</span>
                           </li>
                         ))}
@@ -316,7 +343,7 @@ export default function AIServicesSplitScroll() {
 
                     <button
                       onClick={() => openContactModal(disc.name)}
-                      className="px-6 py-3 rounded-full bg-white/10 hover:bg-[#1163FB] text-white text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md"
+                      className="px-6 py-3 rounded-full bg-white/10 hover:bg-[#FF5B2E] text-white text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md"
                     >
                       <span>Consult on {disc.name}</span>
                       <ArrowUpRight className="w-3.5 h-3.5" />
