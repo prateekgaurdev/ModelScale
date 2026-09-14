@@ -1,0 +1,53 @@
+---
+// BigCTA.astro — NEW. Dark-inverted closing CTA.
+---
+
+<section class="ms-big-cta-wrap">
+  <div class="ms-big-cta">
+    <div class="mono-label" style="color:var(--accent)">[ Ship something real ]</div>
+    <h2 class="line-anim">
+      <span>Your next release</span>
+      <span><em>runs on our stack.</em></span>
+    </h2>
+    <p>Book a 30-minute strategy call. We'll audit one workflow, benchmark it against our best-of, and hand you a written roadmap — free.</p>
+    <div class="row">
+      <button
+        class="swap-text-button btn-cta-accent"
+        onclick="window.dispatchEvent(new CustomEvent('open-contact-modal',{detail:{source:'big-cta'}}))"
+      >
+        <span class="text-original"><span>Book a strategy call</span></span>
+        <span class="text-hover"><span>Book a strategy call</span></span>
+      </button>
+      <a href="#pricing" class="swap-text-button btn-cta-ghost">
+        <span class="text-original"><span>See pricing</span></span>
+        <span class="text-hover"><span>See pricing</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-big-cta-wrap { padding: clamp(48px, 8vw, 100px) 0; background: var(--paper); }
+  .ms-big-cta {
+    max-width: 1440px; margin: 0 auto;
+    background: var(--ink); color: var(--paper);
+    border-radius: 28px; padding: clamp(48px, 8vw, 100px) clamp(28px, 5vw, 72px);
+    margin-inline: clamp(1rem, 3vw, 2.5rem);
+    position: relative; overflow: hidden;
+  }
+  .ms-big-cta::before {
+    content: ''; position: absolute; inset: -30% -10% auto auto; width: 60%; height: 60%;
+    background: radial-gradient(circle, var(--accent-glow), transparent 60%);
+    filter: blur(60px); pointer-events: none;
+  }
+  .ms-big-cta h2 { font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 0.95; letter-spacing: -0.03em; margin-top: 16px; position: relative; }
+  .ms-big-cta h2 span { display: block; }
+  .ms-big-cta h2 em { font-style: italic; color: var(--accent); }
+  .ms-big-cta p { color: rgba(255,255,255,0.7); margin-top: 20px; font-size: 1.05rem; max-width: 52ch; position: relative; }
+  .ms-big-cta .row { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; position: relative; }
+
+  .btn-cta-accent { background: var(--accent); color: #fff; border-radius: 9999px; padding: 14px 22px; border: none; font-weight: 500; box-shadow: 0 8px 28px -10px var(--accent-glow); transition: background .3s ease, transform .3s var(--spring); }
+  .btn-cta-accent:hover { background: var(--accent-hover); transform: translateY(-2px); }
+  .btn-cta-ghost { background: transparent; color: var(--paper); border: 1px solid rgba(255,255,255,0.24); border-radius: 9999px; padding: 14px 22px; transition: border-color .3s ease, background .3s ease; }
+  .btn-cta-ghost:hover { border-color: var(--paper); background: rgba(255,255,255,0.04); }
+</style>

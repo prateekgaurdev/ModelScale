@@ -1,0 +1,79 @@
+---
+// LinkedInSpotlight.astro — flagship product #1
+---
+
+<section id="linkedin-automater" class="ms-spot">
+  <div class="container-lg ms-spot-grid">
+    <div class="ms-spot-copy reveal">
+      <div class="ms-spot-tag">◉ Flagship product</div>
+      <h2 class="ms-spot-title line-anim">
+        <span>LinkedIn Post</span>
+        <span><em>Automater.</em></span>
+      </h2>
+      <p class="ms-spot-desc">
+        A ghostwriting agent that studies your voice, drafts a week of high-signal
+        LinkedIn posts, schedules them, and rewrites what doesn't perform. Trained
+        on your positioning, gated behind your approvals.
+      </p>
+      <ul class="ms-spot-bullets">
+        <li>Voice cloning from 6 sample posts — no generic AI cadence.</li>
+        <li>Multi-armed bandit tests hooks and formats across your audience.</li>
+        <li>Draft → approve → schedule pipeline with Slack in the loop.</li>
+        <li>Analytics wired back into the next draft cycle. It gets sharper.</li>
+      </ul>
+      <div class="ms-spot-ctas">
+        <a href="#pricing" class="swap-text-button btn-primary-blue">
+          <span class="text-original"><span>See plans</span></span>
+          <span class="text-hover"><span>See plans</span></span>
+        </a>
+        <button class="swap-text-button transparent-wht-btn" onclick="window.dispatchEvent(new CustomEvent('open-contact-modal',{detail:{source:'linkedin-demo'}}))">
+          <span class="text-original"><span class="blk-text">Watch a 90s demo →</span></span>
+          <span class="text-hover"><span class="blk-text">Watch a 90s demo →</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="reveal delay-1 ms-spot-visual">
+      <div class="li-post">
+        <div class="li-head">
+          <div class="li-avatar">P</div>
+          <div>
+            <div class="li-name">Priya · Head of GTM</div>
+            <div class="li-sub">2h · Auto-published by ModelScale · 🌐</div>
+          </div>
+          <div class="mono-label" style="margin-left:auto;color:var(--accent)">◉ Live</div>
+        </div>
+        <div class="li-body">
+          Founders — stop measuring "AI adoption" in seats.{"\n\n"}Measure it in shipping velocity. The teams pulling ahead this year are the ones who let AI touch the critical path, not the sidebar.{"\n\n"}Here's the exact stack we ship into series-B teams ↓
+        </div>
+        <div class="li-metrics">
+          <span>👍 2.4k</span><span>💬 187</span><span>🔁 62</span>
+          <span style="margin-left:auto;color:var(--accent)">+312% vs baseline</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-spot { padding: clamp(80px, 12vw, 160px) 0; border-top: 1px solid var(--rule); background: var(--paper); position: relative; }
+  .ms-spot-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+  @media (max-width: 960px) { .ms-spot-grid { grid-template-columns: 1fr; } }
+  .ms-spot-tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+  .ms-spot-title { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 0.98; letter-spacing: -0.02em; margin: 14px 0 20px; }
+  .ms-spot-title em { font-style: italic; color: var(--accent); }
+  .ms-spot-title span { display: block; }
+  .ms-spot-desc { color: var(--ink-2); font-size: 1.05rem; line-height: 1.6; max-width: 46ch; }
+  .ms-spot-bullets { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 10px; }
+  .ms-spot-bullets li { display: flex; align-items: flex-start; gap: 10px; font-size: 15px; color: var(--ink-2); }
+  .ms-spot-bullets li::before { content:''; width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--ink); flex-shrink: 0; margin-top: 3px; background: radial-gradient(circle at 50% 50%, var(--accent) 0 4px, transparent 5px); }
+  .ms-spot-ctas { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+
+  .li-post { background:#fff; border:1px solid var(--rule-strong); border-radius:16px; padding:22px; max-width:520px; margin-left:auto; box-shadow: 0 30px 80px -40px rgba(11,11,13,0.25); font-family: var(--font-ui); }
+  .li-head { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+  .li-avatar { width:44px; height:44px; border-radius:50%; background: linear-gradient(135deg,var(--accent),#F2C4A6); display:inline-flex; align-items:center; justify-content:center; color:#fff; font-family:var(--font-display); font-size:20px; }
+  .li-name { font-weight:600; font-size:14px; }
+  .li-sub { font-size:12px; color:var(--ink-3); }
+  .li-body { font-size:14px; line-height:1.55; color:var(--ink); white-space:pre-wrap; }
+  .li-metrics { display:flex; gap:16px; margin-top:14px; padding-top:12px; border-top:1px solid var(--rule); font-size:12px; color:var(--ink-3); }
+</style>

@@ -1,338 +1,120 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useScrollReveal } from '../../hooks/useScrollReveal';
+import { ShieldCheck, Lock, CircleCheck } from 'lucide-react';
+import React from 'react';
 
-const DURATION = 5000; // ms per item
-
-const items = [
+const complianceList = [
   {
-    num: '1',
-    title: 'Data Privacy & Protection',
-    content: 'We implement GDPR, CCPA, HIPAA, and LGPD data privacy controls across every system we build — anonymisation pipelines, consent management platforms, and automated breach response.',
-    badges: ['GDPR', 'CCPA', 'HIPAA', 'LGPD'],
+    name: 'SOC 2 Type II Certified',
+    code: 'AICPA Trust Services Criteria',
+    desc: 'Audited security, availability, and confidentiality controls ensuring rigorous operational safety.',
+    badge: 'Certified'
   },
   {
-    num: '2',
-    title: 'Security & Risk Management',
-    content: 'ISO/IEC 27001, PCI DSS Level 1, NIST Cybersecurity Framework, and FedRAMP-ready architectures ensure your infrastructure meets the most demanding security audit requirements.',
-    badges: ['ISO/IEC 27001', 'PCI DSS', 'NIST CSF', 'FedRAMP'],
+    name: 'ISO/IEC 27001:2022',
+    code: 'Information Security Management',
+    desc: 'Globally recognized framework for systematic information risk management and data governance.',
+    badge: 'Accredited'
   },
   {
-    num: '3',
-    title: 'AI & Technology Regulations',
-    content: 'EU AI Act compliance, explainability documentation, bias auditing, and responsible AI ethics frameworks — built into every model we train and every agent we deploy.',
-    badges: ['EU AI Act', 'AI Ethics', 'Model Cards', 'Bias Audits'],
+    name: 'HIPAA & HITRUST',
+    code: 'Healthcare Compliance',
+    desc: 'Strict end-to-end PHI encryption, access logging, and business associate agreement (BAA) alignment.',
+    badge: 'Compliant'
   },
   {
-    num: '4',
-    title: 'Industry-Specific Standards',
-    content: 'SOX-compliant audit trails for financial systems, HIPAA BAA agreements for healthcare, FTC Safeguards Rule for financial services, and ISO 9001 quality management for enterprise delivery.',
-    badges: ['SOX', 'FTC Safeguards', 'ISO 9001', 'HIPAA BAA'],
+    name: 'GDPR & CCPA',
+    code: 'Global Data Privacy',
+    desc: 'Privacy by design, automated user consent management, and secure cross-border data residency.',
+    badge: 'Enforced'
   },
   {
-    num: '5',
-    title: 'Global Regulatory Frameworks',
-    content: 'Business continuity under ISO 22301, environmental stewardship with ISO 14001, and cross-border data transfer compliance with the EU-US Data Privacy Framework.',
-    badges: ['ISO 22301', 'ISO 14001', 'EU-US DPF', 'GDPR'],
+    name: 'FedRAMP Cloud Ready',
+    code: 'Public Sector Security',
+    desc: 'High-baseline cybersecurity controls architected for government and regulated enterprise workloads.',
+    badge: 'Ready'
   },
   {
-    num: '6',
-    title: 'Compliance for Cloud & SaaS',
-    content: 'SOC 2 Type II audit readiness, FedRAMP authorisation support, and CSA Cloud Controls Matrix implementation — built into infrastructure-as-code so compliance is automated, not manual.',
-    badges: ['SOC 2 Type II', 'FedRAMP', 'CSA CCM', 'ISO 27017'],
-  },
+    name: 'PCI-DSS Level 1',
+    code: 'Payment Card Security',
+    desc: 'Tokenized transaction processing ensuring complete cardholder data protection and zero leakage.',
+    badge: 'Standard'
+  }
 ];
 
-export default function ComplianceAccordion() {
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  useScrollReveal();
-
-  const startTimer = (idx: number) => {
-    // Clear existing
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (progressRef.current) clearInterval(progressRef.current);
-    setProgress(0);
-
-    const startTime = Date.now();
-    progressRef.current = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const pct = Math.min((elapsed / DURATION) * 100, 100);
-      setProgress(pct);
-    }, 50);
-
-    timerRef.current = setTimeout(() => {
-      const next = (idx + 1) % items.length;
-      setActiveIdx(next);
-    }, DURATION);
-  };
-
-  useEffect(() => {
-    startTimer(activeIdx);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (progressRef.current) clearInterval(progressRef.current);
-    };
-  }, [activeIdx]);
-
-  const handleClick = (idx: number) => {
-    if (idx === activeIdx) return;
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (progressRef.current) clearInterval(progressRef.current);
-    setActiveIdx(idx);
-  };
-
-  const cur = items[activeIdx];
-
+export default function ComplianceSection() {
   return (
-    <section id="compliance" className="compliance-section">
-      <div className="container-xl">
+    <section id="compliance" className="py-24 bg-[#0a0c10] relative border-t border-white/10 overflow-hidden">
+      
+      {/* Ambient Background Glow */}
+      <div className="absolute bottom-0 right-0 w-[600px] h-[400px] bg-emerald-600/10 blur-[160px] rounded-full pointer-events-none" />
 
-        <div className="compliance-layout">
+      <div className="layout-container-lg relative z-10">
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+          <div className="lg:col-span-7">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-4">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Security & Governance First</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              Building With Compliance <br />
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">
+                and Zero-Trust Risk in Mind.
+              </span>
+            </h2>
+            <p className="mt-4 text-base text-gray-300 font-normal leading-relaxed max-w-2xl">
+              We embed automated security controls, penetration testing, and regulatory compliance into every stage of the engineering lifecycle, eliminating vulnerabilities before they reach production.
+            </p>
+          </div>
 
-          {/* LEFT: sticky heading + description */}
-          <div className="compliance-left reveal">
-            <div className="compliance-left-inner">
-              <img
-                src="/assets/images/compliance-driven-icon.svg"
-                alt="Compliance"
-                className="compliance-left-icon"
-                onError={(e) => (e.currentTarget.style.display = 'none')}
-              />
-              <h2 className="compliance-title">
-                Building With<br />
-                Compliance and<br />
-                Risk in Mind
-              </h2>
-              <p className="compliance-subtitle">
-                At ModelScale, we integrate compliance into every layer of our
-                engineering process — from the first architecture decision to
-                the final production deployment.
+          <div className="lg:col-span-5 flex flex-col justify-end">
+            <div className="p-6 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl">
+              <div className="flex items-center gap-3 mb-3">
+                <Lock className="w-5 h-5 text-emerald-400" />
+                <span className="text-sm font-bold text-white">100% IP & Source Code Ownership</span>
+              </div>
+              <p className="text-xs text-gray-400 leading-relaxed font-normal">
+                Every line of code, architectural design document, and trained model weights remain 100% your proprietary intellectual property from day one.
               </p>
+              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gray-400">
+                <span>NDA Protected</span>
+                <span className="text-emerald-400">Continuous SAST/DAST Auditing</span>
+              </div>
             </div>
           </div>
-
-          {/* RIGHT: timed accordion */}
-          <div className="compliance-right">
-            {items.map((item, idx) => {
-              const isOpen = idx === activeIdx;
-              return (
-                <div
-                  key={item.num}
-                  className={`comp-item reveal delay-${idx + 1} ${isOpen ? 'comp-item--open' : ''}`}
-                  onClick={() => handleClick(idx)}
-                >
-                  {/* Header row */}
-                  <div className="comp-item-header">
-                    <div className="comp-item-num">[ {item.num} ]</div>
-                    <h3 className="comp-item-title">{item.title}</h3>
-                    <span className="comp-item-arrow">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d={isOpen ? 'M18 15L12 9L6 15' : 'M6 9L12 15L18 9'}
-                          stroke="currentColor" strokeWidth="2"
-                          strokeLinecap="round" strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-
-                  {/* Progress bar (only on open item) */}
-                  {isOpen && (
-                    <div className="comp-progress-bar">
-                      <div
-                        className="comp-progress-fill"
-                        style={{ width: `${progress}%` }}
-                      />
-                    </div>
-                  )}
-
-                  {/* Expandable content */}
-                  <div className="comp-item-body" style={{ display: isOpen ? 'block' : 'none' }}>
-                    <p className="comp-item-desc">{item.content}</p>
-                    <div className="comp-badges">
-                      {item.badges.map((b) => (
-                        <span key={b} className="comp-badge">{b}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                </div>
-              );
-            })}
-          </div>
-
         </div>
+
+        {/* 6 Grid Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {complianceList.map((item, idx) => (
+            <div key={idx} className="p-6 sm:p-8 rounded-2xl bg-[#0e1218] border border-white/10 hover:border-emerald-500/40 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-0.5">
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-4">
+                  <span className="text-xs font-mono font-bold text-emerald-400 px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    {item.badge}
+                  </span>
+                  <span className="text-[11px] font-mono text-gray-400">
+                    {item.code}
+                  </span>
+                </div>
+                
+                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
+                  {item.name}
+                </h3>
+                
+                <p className="text-xs sm:text-sm text-gray-400 leading-relaxed font-normal">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-gray-300">
+                <CircleCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Built into CI/CD pipeline</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
-
-      <style>{`
-        .compliance-section {
-          background: #000;
-          padding: clamp(48px, 6vw, 96px) 0;
-          border-top: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .compliance-layout {
-          display: grid;
-          grid-template-columns: 1fr 1.6fr;
-          gap: clamp(2rem, 4vw, 5rem);
-          align-items: start;
-        }
-
-        /* LEFT */
-        .compliance-left-inner {
-          position: sticky;
-          top: 100px;
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
-
-        .compliance-left-icon {
-          width: 56px;
-          height: 56px;
-          object-fit: contain;
-          filter: invert(1) brightness(0.9);
-        }
-
-        .compliance-title {
-          font-size: clamp(1.75rem, 2rem + 0.5vw, 2.75rem);
-          font-weight: 700;
-          line-height: 1.15;
-          letter-spacing: -0.02em;
-          color: #fff;
-          margin: 0;
-        }
-
-        .compliance-subtitle {
-          font-size: 0.9375rem;
-          font-weight: 400;
-          line-height: 1.7;
-          color: rgba(255,255,255,0.55);
-          margin: 0;
-          max-width: 380px;
-        }
-
-        /* RIGHT: accordion */
-        .compliance-right {
-          display: flex;
-          flex-direction: column;
-          gap: 0;
-        }
-
-        .comp-item {
-          border-top: 1px solid rgba(255,255,255,0.08);
-          cursor: pointer;
-          overflow: hidden;
-          transition: background 0.25s ease;
-        }
-        .comp-item:last-child {
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .comp-item--open {
-          background: rgba(17,99,251,0.04);
-        }
-
-        .comp-item-header {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          padding: 1.25rem 0;
-          user-select: none;
-        }
-
-        .comp-item-num {
-          font-family: 'Plus Jakarta Sans', monospace;
-          font-size: 0.8125rem;
-          font-weight: 500;
-          color: rgba(255,255,255,0.35);
-          min-width: 36px;
-          flex-shrink: 0;
-        }
-        .comp-item--open .comp-item-num {
-          color: #1163fb;
-        }
-
-        .comp-item-title {
-          font-size: clamp(0.9375rem, 1rem + 0.1vw, 1.125rem);
-          font-weight: 600;
-          line-height: 1.3;
-          color: rgba(255,255,255,0.7);
-          margin: 0;
-          flex: 1;
-          transition: color 0.2s ease;
-        }
-        .comp-item--open .comp-item-title {
-          color: #fff;
-        }
-
-        .comp-item-arrow {
-          color: rgba(255,255,255,0.3);
-          flex-shrink: 0;
-          transition: color 0.2s ease, transform 0.3s ease;
-        }
-        .comp-item--open .comp-item-arrow {
-          color: #1163fb;
-        }
-
-        /* Animated progress bar */
-        .comp-progress-bar {
-          height: 2px;
-          background: rgba(17,99,251,0.15);
-          border-radius: 9999px;
-          overflow: hidden;
-          margin-bottom: 1rem;
-        }
-        .comp-progress-fill {
-          height: 100%;
-          background: #1163fb;
-          border-radius: 9999px;
-          transition: width 0.05s linear;
-          will-change: width;
-        }
-
-        /* Content */
-        .comp-item-body {
-          padding-bottom: 1.5rem;
-          padding-left: calc(36px + 1rem);
-        }
-
-        .comp-item-desc {
-          font-size: 0.9rem;
-          line-height: 1.7;
-          color: rgba(255,255,255,0.5);
-          margin: 0 0 1rem 0;
-        }
-
-        .comp-badges {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-        .comp-badge {
-          padding: 4px 12px;
-          border-radius: 9999px;
-          border: 1px solid rgba(255,255,255,0.12);
-          font-size: 0.75rem;
-          font-weight: 600;
-          color: rgba(255,255,255,0.5);
-          background: rgba(255,255,255,0.03);
-          letter-spacing: 0.03em;
-        }
-
-        @media (max-width: 900px) {
-          .compliance-layout {
-            grid-template-columns: 1fr;
-          }
-          .compliance-left-inner {
-            position: static;
-          }
-          .comp-item-body {
-            padding-left: 0;
-          }
-        }
-      `}</style>
     </section>
   );
 }

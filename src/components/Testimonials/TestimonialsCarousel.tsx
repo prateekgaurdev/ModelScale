@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { Star, CheckCircle2 } from "lucide-react";
+import { Star, CircleCheck } from "lucide-react";
 import { useScrollReveal } from "../../hooks/useScrollReveal";
 
 // Position config — matches home-desktop.js initTestimonialVerticalSlider exactly
@@ -117,7 +117,7 @@ export default function TestimonialsCarousel() {
               </div>
               <p className="clutch-label">on Clutch · 500+ verified executive reviews</p>
               <div className="clutch-ok">
-                <CheckCircle2 width={13} height={13}/>
+                <CircleCheck width={13} height={13}/>
                 <span>100% Verified Enterprise Engagements</span>
               </div>
             </div>
@@ -181,7 +181,7 @@ export default function TestimonialsCarousel() {
                         <div>
                           <div className="tcard-name">
                             {r.name}
-                            <CheckCircle2 width={13} height={13} style={{color:"#1163fb"}}/>
+                            <CircleCheck width={13} height={13} style={{color:"#1163fb"}}/>
                           </div>
                           <div className="tcard-role">{r.role}</div>
                         </div>

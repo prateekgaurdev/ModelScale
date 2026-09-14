@@ -1,0 +1,69 @@
+---
+// GradientCanvas.astro — cinematic paper-blob backdrop.
+// Drop inside any full-bleed section as the first child.
+// Usage:  <GradientCanvas intensity={1} />
+interface Props { intensity?: number; }
+const { intensity = 1 } = Astro.props;
+---
+
+<canvas class="ms-gradient-canvas" data-intensity={intensity}></canvas>
+<div class="ms-gradient-grain" aria-hidden="true"></div>
+
+<style>
+  .ms-gradient-canvas {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .ms-gradient-grain {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    opacity: 0.18; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.28 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+</style>
+
+<script>
+  // Runs once per canvas on the page.
+  document.querySelectorAll<HTMLCanvasElement>('.ms-gradient-canvas').forEach((canvas) => {
+    if (canvas.dataset.msBound) return; canvas.dataset.msBound = '1';
+    const ctx = canvas.getContext('2d')!;
+    const intensity = parseFloat(canvas.dataset.intensity || '1');
+    let raf: number, w = 0, h = 0, dpr = 1;
+    const blobs = [
+      { x: 0.20, y: 0.30, r: 0.55, c: [255, 91, 46,  0.20 * intensity], vx:  0.00012, vy:  0.00007 },
+      { x: 0.75, y: 0.25, r: 0.50, c: [184, 199, 232, 0.35 * intensity], vx: -0.00009, vy:  0.00011 },
+      { x: 0.50, y: 0.80, r: 0.60, c: [242, 196, 166, 0.30 * intensity], vx:  0.00006, vy: -0.00013 },
+      { x: 0.90, y: 0.70, r: 0.45, c: [255, 91, 46,  0.12 * intensity], vx: -0.00008, vy: -0.00006 },
+    ];
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    let t0 = performance.now();
+    const draw = (t: number) => {
+      const dt = t - t0; t0 = t;
+      ctx.clearRect(0, 0, w, h);
+      const g0 = ctx.createLinearGradient(0, 0, 0, h);
+      g0.addColorStop(0, '#F5F3EE'); g0.addColorStop(1, '#EEEAE1');
+      ctx.fillStyle = g0; ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'multiply';
+      for (const b of blobs) {
+        b.x += b.vx * dt; b.y += b.vy * dt;
+        if (b.x < 0.05 || b.x > 0.95) b.vx *= -1;
+        if (b.y < 0.05 || b.y > 0.95) b.vy *= -1;
+        const cx = b.x * w, cy = b.y * h, cr = b.r * Math.max(w, h);
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr);
+        g.addColorStop(0, `rgba(${b.c[0]},${b.c[1]},${b.c[2]},${b.c[3]})`);
+        g.addColorStop(1, `rgba(${b.c[0]},${b.c[1]},${b.c[2]},0)`);
+        ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+      }
+      ctx.globalCompositeOperation = 'source-over';
+      raf = requestAnimationFrame(draw);
+    };
+    raf = requestAnimationFrame(draw);
+  });
+</script>

@@ -1,0 +1,84 @@
+---
+// VoiceSpotlight.astro — flagship product #2
+---
+
+<section id="voice-agent" class="ms-spot ms-spot-alt">
+  <div class="container-lg ms-spot-grid reverse">
+    <div class="ms-spot-copy reveal">
+      <div class="ms-spot-tag">◉ Flagship product</div>
+      <h2 class="ms-spot-title line-anim">
+        <span>AI Voice</span>
+        <span><em>Calling Agent.</em></span>
+      </h2>
+      <p class="ms-spot-desc">
+        A calling agent that qualifies inbound leads, books meetings and follows up —
+        all with human-parity latency and 12-language coverage. Sits inside your
+        existing telephony, honours your compliance playbook.
+      </p>
+      <ul class="ms-spot-bullets">
+        <li>&lt; 380 ms turn latency. Sounds like a person, not a bot.</li>
+        <li>RAG-grounded on your CRM. Never forgets prior context.</li>
+        <li>Escalation to a human rep with warm hand-off + summary.</li>
+        <li>Full call logs, sentiment and objection maps in your dashboard.</li>
+      </ul>
+      <div class="ms-spot-ctas">
+        <a href="#pricing" class="swap-text-button btn-primary-blue">
+          <span class="text-original"><span>See plans</span></span>
+          <span class="text-hover"><span>See plans</span></span>
+        </a>
+        <button class="swap-text-button transparent-wht-btn" onclick="window.dispatchEvent(new CustomEvent('open-contact-modal',{detail:{source:'voice-demo'}}))">
+          <span class="text-original"><span class="blk-text">Call our demo line →</span></span>
+          <span class="text-hover"><span class="blk-text">Call our demo line →</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="reveal delay-1">
+      <div class="voice-card">
+        <div class="voice-status"><span class="dot"/> On call · 00:42 · GDPR / TCPA safe</div>
+        <div class="voice-wave" id="msVoiceWave"></div>
+        <div class="voice-transcript">
+          <div><span class="agent">Agent</span>Hi, this is Nova from ModelScale — you booked a discovery slot last Tuesday, still a good time?</div>
+          <div><span class="agent">Caller</span>Yeah, I've got about ten minutes.</div>
+          <div><span class="agent">Agent</span>Perfect. I pulled your notes — you're evaluating voice agents for outbound follow-up. Want me to walk you through how our escalation model works?</div>
+        </div>
+        <div class="voice-meta">
+          <span>◉ 12 languages</span><span>◉ 380ms latency</span><span>◉ SOC 2 · HIPAA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ms-spot-alt { background: var(--paper-2); }
+  .ms-spot-alt .ms-spot-grid.reverse { grid-template-columns: 1.1fr 1fr; }
+  .ms-spot-alt .ms-spot-grid.reverse .ms-spot-copy { order: 2; }
+  @media (max-width: 960px) { .ms-spot-alt .ms-spot-grid.reverse { grid-template-columns: 1fr; } .ms-spot-alt .ms-spot-grid.reverse .ms-spot-copy { order: 0; } }
+
+  .voice-card { background: var(--ink); color: var(--paper); border-radius: 20px; padding: 24px; box-shadow: 0 40px 100px -40px rgba(11,11,13,0.35); max-width: 540px; margin: 0 auto; font-family: var(--font-ui); }
+  .voice-status { display:flex; align-items:center; gap:10px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.7); }
+  .voice-status .dot { width:8px; height:8px; border-radius:50%; background:var(--accent); animation: msPulse 1.6s ease-in-out infinite; }
+  .voice-wave { display:flex; align-items:center; gap:3px; height:68px; margin:20px 0; }
+  .voice-wave b { display:inline-block; width:4px; background: var(--paper); border-radius:2px; opacity:0.9; transition: height .09s linear, opacity .09s linear; }
+  .voice-transcript { font-size:14px; line-height:1.6; color: rgba(255,255,255,0.85); min-height: 96px; }
+  .voice-transcript div { margin-bottom: 8px; }
+  .voice-transcript .agent { color: var(--accent); font-family: var(--font-mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; margin-right:8px; }
+  .voice-meta { display:flex; gap:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1); margin-top:16px; font-family: var(--font-mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color: rgba(255,255,255,0.6); }
+</style>
+
+<script>
+  const wave = document.getElementById('msVoiceWave');
+  if (wave) {
+    for (let i = 0; i < 40; i++) { const b = document.createElement('b'); b.style.height = '6px'; wave.appendChild(b); }
+    const bars = Array.from(wave.querySelectorAll('b'));
+    setInterval(() => {
+      bars.forEach((b, i) => {
+        const h = 6 + Math.random() * 48;
+        b.style.height = h + 'px';
+        b.style.opacity = String(0.4 + (h / 60) * 0.6);
+        if (i % 7 === 0) b.style.background = 'var(--accent)';
+      });
+    }, 90);
+  }
+</script>

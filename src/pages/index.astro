@@ -1,57 +1,59 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroSection from '../components/Hero/HeroSection.astro';
-import StatsMarquee from '../components/StatsMarquee/StatsMarquee.astro';
-import AIServicesSplitScroll from '../components/Services/AIServicesSplitScroll.tsx';
-import ServicesMatrix from '../components/Services/ServicesMatrix.astro';
-import PortfolioSlider from '../components/Portfolio/PortfolioSlider.tsx';
-import ModelScaleAISpotlight from '../components/ModelScaleAI/ModelScaleAISpotlight.astro';
-import TestimonialsCarousel from '../components/Testimonials/TestimonialsCarousel.tsx';
-import GlobalLeadersGrid from '../components/GlobalLeaders/GlobalLeadersGrid.astro';
-import TechExpertiseMatrix from '../components/TechExpertise/TechExpertiseMatrix.tsx';
-import StrategicAlliances from '../components/Alliances/StrategicAlliances.astro';
-import AwardsTimeline from '../components/Awards/AwardsTimeline.astro';
-import ComplianceSection from '../components/Compliance/ComplianceSection.tsx';
-import FAQAccordion from '../components/FAQ/FAQAccordion.tsx';
+
+// Kept
+// import HeroSection            from '../components/Hero/HeroSection.astro';
+import HeroSectionSplit   from '../components/Hero/HeroSectionSplit.astro'; // ← swap in for v2
+import BrandMarquee           from '../components/Hero/BrandMarquee.tsx';
+import StatsMarquee           from '../components/StatsMarquee/StatsMarquee.astro';
+import AIServicesSplitScroll  from '../components/Services/AIServicesSplitScroll.tsx';
+import ServicesMatrix         from '../components/Services/ServicesMatrix.astro';
+import PortfolioSlider        from '../components/Portfolio/PortfolioSlider.tsx';
+import ModelScaleAISpotlight  from '../components/ModelScaleAI/ModelScaleAISpotlight.astro';
+import TestimonialsCarousel   from '../components/Testimonials/TestimonialsCarousel.tsx';
+import GlobalLeadersGrid      from '../components/GlobalLeaders/GlobalLeadersGrid.astro';
+import TechExpertiseMatrix    from '../components/TechExpertise/TechExpertiseMatrix.tsx';
+import StrategicAlliances     from '../components/Alliances/StrategicAlliances.astro';
+import AwardsTimeline         from '../components/Awards/AwardsTimeline.astro';
+import ComplianceSection      from '../components/Compliance/ComplianceSection.tsx';
+import FAQAccordion           from '../components/FAQ/FAQAccordion.tsx';
+
+// NEW
+import LinkedInSpotlight      from '../components/Products/LinkedInSpotlight.astro';
+import VoiceSpotlight         from '../components/Products/VoiceSpotlight.astro';
+import PricingTiers           from '../components/Pricing/PricingTiers.astro';
+import ChangelogTeaser        from '../components/Blog/ChangelogTeaser.astro';
+import BigCTA                 from '../components/CTA/BigCTA.astro';
 ---
 
 <BaseLayout>
-  <!-- Hero: two-column, video bg, awards carousel bottom-right -->
-  <HeroSection />
+  <HeroSectionSplit />
+  <BrandMarquee client:visible />
 
-  <!-- Stats Marquee -->
-  <StatsMarquee />
+  <!-- Product spotlights front-loaded — highest-conversion assets -->
+  <LinkedInSpotlight />
+  <VoiceSpotlight />
 
-  <!-- Diagonal staircase services grid (light bg) -->
+  <!-- Existing capability sections -->
   <ServicesMatrix />
-
-  <!-- AI Suite sticky split-scroll -->
   <AIServicesSplitScroll client:visible />
-
-  <!-- Portfolio slider: 9 real case studies with progress bar -->
+  <StatsMarquee />
   <PortfolioSlider client:visible />
-
-  <!-- ModelScale AI Enterprise Spotlight -->
   <ModelScaleAISpotlight />
-
-  <!-- C-Suite testimonials: vertical slider -->
   <TestimonialsCarousel client:visible />
 
-  <!-- Global Leaders dual-direction marquee -->
-  <GlobalLeadersGrid />
+  <!-- NEW: Pricing -->
+  <PricingTiers />
 
-  <!-- Technical Expertise: hover-expand grid (11 cards) -->
+  <!-- Trust surface -->
   <TechExpertiseMatrix client:visible />
-
-  <!-- Strategic Cloud Alliances -->
   <StrategicAlliances />
-
-  <!-- Awards Timeline -->
+  <GlobalLeadersGrid />
   <AwardsTimeline />
-
-  <!-- Compliance: timed auto-advancing accordion with progress bars -->
   <ComplianceSection client:visible />
 
-  <!-- FAQ Accordion -->
+  <!-- NEW: Field notes + closing CTA -->
+  <ChangelogTeaser />
   <FAQAccordion client:visible />
+  <BigCTA />
 </BaseLayout>

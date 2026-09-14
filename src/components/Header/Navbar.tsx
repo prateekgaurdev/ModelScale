@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ArrowUpRight, Menu, X, BrainCircuit, Code2, Cloud, ShieldCheck, BookOpen, Sparkles } from 'lucide-react';
-import PromoStripe from './PromoStripe';
 
 const navItems = [
   { id: 'inventivai', label: 'ModelScaleAI' },
@@ -63,21 +62,22 @@ export default function Navbar() {
 
   return (
     <>
-      <div className={`fixed top-0 inset-x-0 z-[101] transition-transform duration-300 ${scrolled ? '-translate-y-full' : 'translate-y-0'}`}>
-        <PromoStripe />
-      </div>
+      
       <header
         className={`fixed inset-x-0 z-[100] transition-all duration-300 ${
           scrolled
             ? 'top-0 bg-[#05060a] border-b border-white/[0.08] py-3 shadow-[0_4px_40px_rgba(0,0,0,0.8)]'
-            : 'top-[36px] bg-[#05060a]/85 backdrop-blur-xl border-b border-white/[0.05] py-4'
+            : 'top-0 bg-[#05060a]/85 backdrop-blur-xl border-b border-white/[0.05] py-4'
         }`}
       >
         <div className="container-xl flex items-center justify-between gap-4">
 
         {/* ---- Logo ---- */}
         <a href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <img src="/assets/images/modelscale-logo.png" alt="ModelScale" className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-110" />
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
+            <rect x="2" y="2" width="18" height="18" rx="6" fill="#FF5B2E" />
+            <rect x="12" y="12" width="18" height="18" rx="6" fill="#FFFFFF" fillOpacity="0.9" />
+          </svg>
           <span className="text-[1.35rem] font-bold tracking-tight text-white leading-none">
             ModelScale
           </span>
@@ -289,7 +289,7 @@ export default function Navbar() {
         <div className="hidden sm:flex items-center gap-3 shrink-0">
           <button
             onClick={() => consult('nav-contact')}
-            className="btn-blue text-sm"
+            className="bg-[#FF5B2E] text-white px-5 py-2 rounded-full font-semibold flex items-center justify-center gap-2 text-sm transition-all hover:bg-[#E44A20] shadow-[0_4px_14px_rgba(255,91,46,0.3)]"
           >
             <svg className="w-4 h-4 fill-white" viewBox="0 0 24 24">
               <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
@@ -333,7 +333,7 @@ export default function Navbar() {
             <div className="pt-4">
               <button
                 onClick={() => consult('mobile-drawer')}
-                className="btn-blue w-full justify-center text-sm mt-2"
+                className="bg-[#FF5B2E] text-white px-5 py-2 rounded-full font-semibold flex items-center justify-center gap-2 w-full text-sm mt-2 transition-all hover:bg-[#E44A20] shadow-[0_4px_14px_rgba(255,91,46,0.3)]"
               >
                 <span>Contact Us</span>
                 <span className="btn-icon ml-1">

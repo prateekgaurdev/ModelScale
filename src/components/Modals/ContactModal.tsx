@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, Shield, Send, ArrowUpRight, Sparkles, Building, Mail, User, Phone } from 'lucide-react';
+import { X, CircleCheck, Shield, Send, ArrowUpRight, Sparkles, Building, Mail, User, Phone } from 'lucide-react';
 
 const serviceOptions = [
   'Enterprise AI & Autonomous Agents',
@@ -67,7 +67,7 @@ export default function ContactModal() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div data-lenis-prevent className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+        <div data-lenis-prevent className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           
           {/* Backdrop */}
           <motion.div
@@ -97,7 +97,7 @@ export default function ContactModal() {
             {submitted ? (
               <div className="py-12 text-center flex flex-col items-center">
                 <div className="w-20 h-20 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6 shadow-glow-blue/20">
-                  <CheckCircle2 className="w-10 h-10" />
+                  <CircleCheck className="w-10 h-10" />
                 </div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                   Discovery Request Received!

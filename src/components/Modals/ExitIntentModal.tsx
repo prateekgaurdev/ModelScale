@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, ArrowUpRight, Star, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { X, Sparkles, ArrowUpRight, Star, ShieldCheck, CircleCheck } from 'lucide-react';
 
 export default function ExitIntentModal() {
   const [showExitModal, setShowExitModal] = useState(false);
@@ -60,7 +60,7 @@ export default function ExitIntentModal() {
             {success ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-8 h-8" />
+                  <CircleCheck className="w-8 h-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Roadmap On The Way!</h3>
                 <p className="text-sm text-gray-300 mb-6">
